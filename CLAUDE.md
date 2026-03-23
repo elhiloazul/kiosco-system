@@ -76,16 +76,16 @@ kiosco-system/
 │       │   └── assets/
 │       └── angular.json
 │
-├── packages/                       # Código compartido (La "Verdad Única")
+├── packages/                       # Código compartido
 │   ├── database/                   # Persistencia centralizada
 │   │   ├── prisma/
 │   │   │   └── schema.prisma       # Definición de Campaign, Activity, Slide, Tenant etc.
 │   │   └── index.ts                # Export del PrismaClient
 │   │
-│   ├── domain-shared/              # Contratos de TypeScript
-│   │   ├── interfaces/             # Interfaces de Campaign, Activity, Slide, Tenant etc.
-│   │   ├── enums/                  # SlideType (Video, Image, Text)
-│   │   └── dtos/                   # Validaciones compartidas
+│   ├── shared-kernel/              # Contratos de TypeScript
+│   │       └── domain
+│   │              ├── enums/        # SlideType (Video, Image, Text)
+│   │              └── interfaces/   # Validaciones compartidas
 │   │
 │   └── config-eslint/              # Reglas de linter para todo el equipo
 │

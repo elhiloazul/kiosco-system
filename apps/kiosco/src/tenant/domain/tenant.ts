@@ -3,7 +3,7 @@ import { z } from 'zod';
 // ─── Schema ───────────────────────────────────────────────────────────────────
 
 const TenantSchema = z.object({
-  id: z.string().cuid(),
+  id: z.string().min(1),
   name: z.string().min(1).max(100),
   logoUrl: z.string().url().nullable(),
   isActive: z.boolean(),
