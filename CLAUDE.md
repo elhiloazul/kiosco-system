@@ -91,7 +91,13 @@ kiosco-system/
 │
 ├── turbo.json                      # Configuración de Orquestación de Turbo
 └──  package.json                    # Workspaces y Scripts globales
-
+---
+## 📋 Especificación de cada subdominio.
+- **`domain`:** Contiene el modelo de dominio: una clase de agregado validada internamente con Zod. Los Value Objects solo se crean cuando el concepto tiene identidad propia o comportamiento más allá de validación (ej. `Email`, `Money`). 
+- **`application`:** Contiene los servicios (casos de uso), ademas cada caso de uso puede tener un InputDTO para los parámetos de entrada del caso de uso, y un OutputDTO para los parámetros de salida del caso de uso. Los DTO pueden estar
+en un archivo dentro la capa application, si es necesario se puede incluir un mapper para los casos mas complejos.
+Usar zod para validar los DTOs.
+-**`infrastructure`:** Puede contener la lógica de persistencia del modelo(Agregado)
 
 ---
 
