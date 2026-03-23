@@ -8,6 +8,12 @@ dist
 build
 .next
 out
+tsconfig.tsbuildinfo
+
+# TypeScript generated files leaked into src (should only exist in dist/)
+packages/*/src/**/*.js
+packages/*/src/**/*.d.ts
+packages/*/src/**/*.map
 
 # Turbo
 .turbo
