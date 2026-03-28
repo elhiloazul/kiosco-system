@@ -59,19 +59,21 @@ npm run db:migrate
 
 ## Ejecutar en local
 
-Desde la raíz del monorepo, levanta solo el backend:
+> **Nota:** Asegúrate de usar Node >= 20. Si usas `nvm`: `nvm use 20`
+
+Desde la raíz del monorepo, ejecuta en un solo comando:
 
 ```bash
-npm run dev --workspace=@kiosco/kiosco
+npm run dev:kiosco
 ```
 
-O bien, levanta todo el monorepo en paralelo (API + Backoffice):
+La API quedará disponible en: `http://localhost:3000`
+
+Para levantar todo el monorepo en paralelo (API + Backoffice):
 
 ```bash
 npm run dev
 ```
-
-La API quedará disponible en: `http://localhost:3000`
 
 ---
 
