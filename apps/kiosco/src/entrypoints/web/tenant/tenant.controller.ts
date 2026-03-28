@@ -1,5 +1,5 @@
-import { Controller, Get, Post, Body, UsePipes } from '@nestjs/common';
-import { CreateTenantRequest } from '@kiosco/shared-kernel';
+import { Controller, Get, Post, Body } from '@nestjs/common';
+import { CreateTenantInputDto } from '../../../tenant/application/tenant.dto';
 import { CreateTenantService } from '../../../tenant/application/create-tenant.service';
 import { GetAllTenantsService } from '../../../tenant/application/get-all-tenants.service';
 
@@ -11,8 +11,9 @@ export class TenantController {
   ) {}
 
   @Post()
-  create(@Body() body: CreateTenantRequest) {
-    return this.createTenant.execute(body);
+  create(@Body() body: unknown) {
+    const input = CreateTenantInputDto.parse(body);
+    return this.createTenant.execute(input);
   }
 
   @Get()

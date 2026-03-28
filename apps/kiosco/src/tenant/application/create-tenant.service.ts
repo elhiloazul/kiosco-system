@@ -12,12 +12,10 @@ export class CreateTenantService {
   ) {}
 
   async execute(input: CreateTenantInputDto): Promise<TenantOutputDto> {
-    const parsed = CreateTenantInputDto.parse(input);
-
     const tenant = Tenant.create({
       id: createId(),
-      name: parsed.name,
-      logoUrl: parsed.logoUrl,
+      name: input.name,
+      logoUrl: input.logoUrl,
     });
 
     await this.tenantRepository.save(tenant);
