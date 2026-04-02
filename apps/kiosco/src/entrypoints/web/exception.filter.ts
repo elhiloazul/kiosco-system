@@ -1,4 +1,4 @@
-import { ExceptionFilter, Catch, ArgumentsHost, HttpException, HttpStatus } from '@nestjs/common';
+import { ExceptionFilter, Catch, ArgumentsHost, HttpException, HttpStatus, UnauthorizedException } from '@nestjs/common';
 import { Response } from 'express';
 import { ZodError } from 'zod';
 
@@ -6,6 +6,17 @@ import { ZodError } from 'zod';
 export class GlobalExceptionFilter implements ExceptionFilter {
   catch(exception: unknown, host: ArgumentsHost) {
     const response = host.switchToHttp().getResponse<Response>();
+
+    if (exception instanceof UnauthorizedException) {
+      return response.status(HttpStatus.UNAUTHORIZED).json({
+        success: false,
+        error: {
+          code: HttpStatus.UNAUTHORIZED,
+          message: 'Unauthorized',
+          userMessage: 'No tienes permiso para acceder a este recurso.',
+        },
+      });
+    }
 
     if (exception instanceof ZodError) {
       return response.status(HttpStatus.BAD_REQUEST).json({

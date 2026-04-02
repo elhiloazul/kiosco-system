@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { Prisma } from '@kiosco/database';
-import { PrismaService } from '../../infrastructure/prisma.service';
+import { PrismaService } from '../../shared/infrastructure/prisma.service';
 import { Slide } from '../domain/slide';
 import { ISlideRepository } from '../domain/slide.repository';
 import { SlideType } from '@kiosco/shared-kernel';

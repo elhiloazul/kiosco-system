@@ -3,7 +3,7 @@ import { TENANT_REPOSITORY } from '../domain/tenant.repository';
 import { TenantPrismaRepository } from './tenant-prisma.repository';
 import { CreateTenantService } from '../application/create-tenant.service';
 import { GetAllTenantsService } from '../application/get-all-tenants.service';
-import { PrismaService } from '../../infrastructure/prisma.service';
+import { PrismaService } from '../../shared/infrastructure/prisma.service';
 import { TenantController } from '../../entrypoints/web/tenant/tenant.controller';
 
 @Module({

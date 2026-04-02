@@ -4,7 +4,7 @@ import { CampaignPrismaRepository } from './campaign-prisma.repository';
 import { CreateCampaignService } from '../application/create-campaign.service';
 import { GetCampaignsByTenantService } from '../application/get-campaigns-by-tenant.service';
 import { UpdateCampaignService } from '../application/update-campaign.service';
-import { PrismaService } from '../../infrastructure/prisma.service';
+import { PrismaService } from '../../shared/infrastructure/prisma.service';
 import { CampaignController } from '../../entrypoints/web/campaign/campaign.controller';
 
 @Module({

@@ -4,7 +4,7 @@ import { ActivityPrismaRepository } from './activity-prisma.repository';
 import { CreateActivityService } from '../application/create-activity.service';
 import { GetActivitiesByCampaignService } from '../application/get-activities-by-campaign.service';
 import { UpdateActivityService } from '../application/update-activity.service';
-import { PrismaService } from '../../infrastructure/prisma.service';
+import { PrismaService } from '../../shared/infrastructure/prisma.service';
 import { ActivityController } from '../../entrypoints/web/activity/activity.controller';
 
 @Module({

@@ -40,6 +40,16 @@ PORT=3000
 
 # Entorno de la aplicación: test | prod
 APP_ENV=test
+
+# JWT
+JWT_SECRET=change_me_in_production
+JWT_EXPIRES_IN=15m
+JWT_REFRESH_EXPIRES_IN=7d
+
+# Seed del primer superadmin (requeridas para ejecutar npm run seed:admin)
+SEED_ADMIN_NAME=
+SEED_ADMIN_EMAIL=
+SEED_ADMIN_PASSWORD=
 ```
 
 > **Nota:** Si usas Vercel Postgres o PgBouncer, `DATABASE_URL` debe apuntar al endpoint con connection pooling y `DIRECT_URL` al endpoint directo.
@@ -89,6 +99,7 @@ npm run dev
 | `npm run start` | Ejecuta el build compilado (`node dist/main`) |
 | `npm run test` | Corre los tests |
 | `npm run lint` | Analiza el código con ESLint |
+| `npm run seed:admin` | Crea el primer superadmin (requiere variables `SEED_ADMIN_*`) |
 | `npm run db:generate` | Genera el cliente de Prisma |
 | `npm run db:migrate` | Aplica migraciones (`prisma migrate dev`) |
 | `npm run db:push` | Sincroniza el schema sin generar migraciones (`prisma db push`) |
