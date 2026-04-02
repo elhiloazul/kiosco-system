@@ -8,7 +8,7 @@ API REST del núcleo del sistema multi-tenant para kioscos interactivos, constru
 
 - Node.js >= 20
 - npm >= 10
-- PostgreSQL (local o remoto — se recomienda 
+- PostgreSQL (local o remoto)
 
 ---
 
@@ -45,6 +45,9 @@ APP_ENV=test
 JWT_SECRET=change_me_in_production
 JWT_EXPIRES_IN=15m
 JWT_REFRESH_EXPIRES_IN=7d
+
+# Origen permitido para CORS (URL del backoffice)
+CORS_ORIGIN=http://localhost:4200
 
 # Seed del primer superadmin (requeridas para ejecutar npm run seed:admin)
 SEED_ADMIN_NAME=

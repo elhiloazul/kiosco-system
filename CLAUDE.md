@@ -1,4 +1,4 @@
-# Contexto del Proyecto: Kiosco System 
+# Contexto del Proyecto: Kioscos Interactivos 
 
 Sistema multi-tenant para la gestión y despliegue de experiencias interactivas en kioscos físicos (PCs con pantallas táctiles).
 
