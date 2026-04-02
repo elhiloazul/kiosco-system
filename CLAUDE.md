@@ -6,7 +6,7 @@ Sistema multi-tenant para la gestión y despliegue de experiencias interactivas 
 El proyecto es un Monorepo gestionado con **Turborepo**.
 
 - **`apps/kiosco` (Core/Backend):** API NestJS. Único punto de verdad y acceso a datos.
-- **`apps/backoffice` (Admin):** Panel administrativo en Next.js 15 (App Router), orientado al superadmin.
+- **`apps/backoffice` (Admin):** Panel administrativo en Angular 19 (Standalone Components + Signals), orientado al superadmin.
 - **`apps/punto-movil-informativo-gramalote`:** Cliente visualizador en Angular. (Esta app ya existe por lo que no es necesario generar código)
 - **`packages/database`:** Configuración de Prisma ORM para Vercel Postgres.
 - **`packages/domain-shared`:** Contratos, interfaces y DTOs comunes de TypeScript.
