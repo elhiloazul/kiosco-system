@@ -37,6 +37,9 @@ DIRECT_URL="postgresql://USER:PASSWORD@HOST:PORT/DATABASE?sslmode=require"
 
 # Puerto en el que correrá la API (opcional, default: 3000)
 PORT=3000
+
+# Entorno de la aplicación: test | prod
+APP_ENV=test
 ```
 
 > **Nota:** Si usas Vercel Postgres o PgBouncer, `DATABASE_URL` debe apuntar al endpoint con connection pooling y `DIRECT_URL` al endpoint directo.
