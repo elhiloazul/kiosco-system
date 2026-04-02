@@ -1,0 +1,26 @@
+<div class="h-screen w-full overflow-hidden flex bg-[#F8FAFC]">
+
+  <!-- Sidebar -->
+  <aside class="w-64 bg-[#0F172A] flex flex-col shrink-0">
+    <div class="p-5 border-b border-slate-800">
+      <span class="text-white font-bold text-lg">Kiosco system</span>
+    </div>
+    <nav class="flex-1 p-3 space-y-1">
+      <a class="flex items-center gap-3 px-3 py-2 rounded-lg text-sm text-slate-400 hover:bg-slate-800 cursor-pointer">
+        Tenants
+      </a>
+      <a class="flex items-center gap-3 px-3 py-2 rounded-lg text-sm bg-blue-600 text-white shadow">
+        Editor de Actividades
+      </a>
+      <a class="flex items-center gap-3 px-3 py-2 rounded-lg text-sm text-slate-400 hover:bg-slate-800 cursor-pointer">
+        Kioscos
+      </a>
+    </nav>
+  </aside>
+
+  <!-- Main -->
+  <div class="flex-1 flex flex-col overflow-hidden">
+    <router-outlet />
+  </div>
+
+</div>

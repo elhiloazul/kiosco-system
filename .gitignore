@@ -9,6 +9,7 @@ build
 .next
 out
 tsconfig.tsbuildinfo
+.tsbuildinfo
 
 # TypeScript generated files leaked into src (should only exist in dist/)
 packages/*/src/**/*.js
@@ -36,6 +37,9 @@ yarn-error.log*
 # OS
 .DS_Store
 *.pem
+
+# Angular
+.angular
 
 # IDE
 .vscode

@@ -1,6 +1,6 @@
 ---
 name: frontend-guideline
-description: Aplica el Design System y directrices UI/UX del backoffice KioscoSys al construir componentes Angular/Tailwind. Úsalo al crear o modificar vistas del backoffice.
+description: Aplica el Design System y directrices UI/UX del backoffice Kioscos Interactivos al construir componentes Angular/Tailwind. Úsalo al crear o modificar vistas del backoffice.
 ---
 
 Actúa como un Expert UI/UX Engineer especializado en aplicaciones SaaS modernas (tipo Stripe, Vercel, Linear). Aplica estrictamente el siguiente Design System y estructura visual para las vistas del backoffice de Angular/Tailwind.
