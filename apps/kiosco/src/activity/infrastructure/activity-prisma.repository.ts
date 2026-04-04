@@ -43,7 +43,7 @@ export class ActivityPrismaRepository implements IActivityRepository {
   async findByCampaignId(campaignId: string): Promise<Activity[]> {
     const rows = await this.prisma.activity.findMany({
       where: { campaignId },
-      orderBy: { order: 'asc' },
+      orderBy: [{ menuOrder: 'asc' }, { createdAt: 'asc' }],
     });
     return rows.map((row) =>
       Activity.reconstitute({ ...row, menuConfig: row.menuConfig as MenuConfig | null }),
