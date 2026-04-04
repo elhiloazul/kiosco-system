@@ -96,7 +96,7 @@ export class ActivityListComponent implements OnInit {
     this.router.navigate([
       '/dashboard/tenants', this.tenantId,
       'campaigns', this.campaignId,
-      'activities', activity.id,
+      'activities', activity.id, 'editor',
     ]);
   }
 }

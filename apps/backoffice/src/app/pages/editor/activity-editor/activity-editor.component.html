@@ -1,0 +1,84 @@
+<div class="flex flex-col flex-1 overflow-hidden bg-[#F8FAFC]">
+
+  <!-- ── Header de estado ── -->
+  <header class="h-14 bg-white border-b border-slate-200 shadow-sm flex items-center justify-between px-6 shrink-0">
+
+    <!-- Breadcrumb -->
+    <div class="flex items-center gap-2 text-sm min-w-0">
+      <!-- Botón volver -->
+      <button
+        (click)="goBack()"
+        class="text-slate-400 hover:text-slate-700 transition shrink-0"
+        title="Volver a actividades"
+      >
+        <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" />
+        </svg>
+      </button>
+
+      @if (isLoadingContext()) {
+        <div class="h-4 w-48 bg-slate-100 rounded animate-pulse"></div>
+      } @else {
+        <!-- Tenant -->
+        <a [routerLink]="['/dashboard/tenants', tenant()?.id]" class="text-slate-400 hover:text-slate-700 transition truncate shrink-0">
+          {{ tenant()?.name }}
+        </a>
+
+        <svg class="w-3.5 h-3.5 text-slate-300 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
+        </svg>
+
+        <!-- Campaña -->
+        <a [routerLink]="campaignsUrl()" class="text-slate-400 hover:text-slate-700 transition truncate shrink-0">
+          {{ campaign()?.name }}
+        </a>
+
+        <svg class="w-3.5 h-3.5 text-slate-300 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
+        </svg>
+
+        <!-- Actividad (activa) -->
+        <span class="font-semibold text-slate-900 truncate">{{ activity()?.name }}</span>
+      }
+    </div>
+
+    <!-- Estado de guardado -->
+    <div class="flex items-center gap-2 shrink-0 ml-4">
+      @if (saveStatus() === 'saving') {
+        <svg class="w-3.5 h-3.5 animate-spin text-blue-500" fill="none" viewBox="0 0 24 24">
+          <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4" />
+          <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8H4z" />
+        </svg>
+        <span class="text-xs text-blue-500 font-medium">Guardando...</span>
+      } @else if (saveStatus() === 'unsaved') {
+        <span class="w-2 h-2 rounded-full bg-amber-400 shrink-0"></span>
+        <span class="text-xs text-amber-500 font-medium">Sin guardar</span>
+      } @else {
+        <span class="w-2 h-2 rounded-full bg-emerald-500 shrink-0"></span>
+        <span class="text-xs text-emerald-600 font-medium">Guardado</span>
+      }
+    </div>
+
+  </header>
+
+  <!-- ── Cuerpo del editor ── -->
+  <div class="flex-1 flex overflow-hidden">
+
+    <!-- Panel izquierdo: Timeline — próximo paso -->
+    <aside class="w-72 bg-white border-r border-slate-200 flex flex-col shrink-0">
+      <div class="p-4 border-b border-slate-100">
+        <p class="text-xs font-semibold text-slate-500 uppercase tracking-wider">Secuencia de Slides</p>
+      </div>
+      <div class="flex-1 flex items-center justify-center text-slate-300 text-sm">
+        Próximo paso
+      </div>
+    </aside>
+
+    <!-- Panel derecho: Canvas — próximo paso -->
+    <div class="flex-1 flex items-center justify-center text-slate-300 text-sm">
+      Selecciona un slide
+    </div>
+
+  </div>
+
+</div>

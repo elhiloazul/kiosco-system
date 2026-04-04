@@ -30,6 +30,7 @@ Estas reglas aplican a todo el código de `apps/backoffice`. Son complementarias
 - Todos los componentes son **standalone** (`standalone: true`). Sin NgModules.
 - Usar el **nuevo Control Flow** de Angular: `@if`, `@else`, `@for`, `@switch`. Nunca `*ngIf`, `*ngFor`.
 - Inputs tipados estrictamente. Nunca usar `any`.
+- Los componentes de **página** (los que renderizan dentro del `<router-outlet>` del layout) deben declarar `host: { class: 'flex-1 flex flex-col overflow-hidden' }` para que hereden correctamente el espacio del layout. Sin esto, el host element es un bloque y los hijos con `flex-1` no se expanden.
 
 ---
 

@@ -27,6 +27,11 @@ export const dashboardRoutes: Routes = [
       import('./activities/activity-list/activity-list.component').then((m) => m.ActivityListComponent),
   },
   {
+    path: 'tenants/:tenantId/campaigns/:campaignId/activities/:activityId/editor',
+    loadComponent: () =>
+      import('../../pages/editor/activity-editor/activity-editor.component').then((m) => m.ActivityEditorComponent),
+  },
+  {
     path: 'tenants/:tenantId/kiosks',
     loadComponent: () =>
       import('./tenants/tenant-dashboard/tenant-dashboard.component').then((m) => m.TenantDashboardComponent), // placeholder
