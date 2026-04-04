@@ -10,9 +10,7 @@ export class SlidePrismaRepository implements ISlideRepository {
   constructor(private readonly prisma: PrismaService) {}
 
   async save(slide: Slide): Promise<void> {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const prismaSlide = this.prisma.slide as any;
-    await prismaSlide.upsert({
+    await this.prisma.slide.upsert({
       where: { id: slide.id },
       create: {
         id: slide.id,
@@ -35,37 +33,25 @@ export class SlidePrismaRepository implements ISlideRepository {
   }
 
   async findById(id: string): Promise<Slide | null> {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const row = await (this.prisma.slide as any).findUnique({ where: { id } });
+    const row = await this.prisma.slide.findUnique({ where: { id } });
     if (!row) return null;
     return Slide.reconstitute({
-      id: row.id,
-      activityId: row.activityId,
+      ...row,
       type: row.type as SlideType,
-      name: row.name ?? '',
-      order: row.order,
       content: row.content as Record<string, unknown>,
-      createdAt: row.createdAt,
-      updatedAt: row.updatedAt,
     });
   }
 
   async findByActivityId(activityId: string): Promise<Slide[]> {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const rows = await (this.prisma.slide as any).findMany({
+    const rows = await this.prisma.slide.findMany({
       where: { activityId },
       orderBy: { order: 'asc' },
     });
-    return rows.map((row: any) =>
+    return rows.map((row) =>
       Slide.reconstitute({
-        id: row.id,
-        activityId: row.activityId,
+        ...row,
         type: row.type as SlideType,
-        name: row.name ?? '',
-        order: row.order,
         content: row.content as Record<string, unknown>,
-        createdAt: row.createdAt,
-        updatedAt: row.updatedAt,
       }),
     );
   }
