@@ -45,7 +45,10 @@ export class SlidePrismaRepository implements ISlideRepository {
   async findByActivityId(activityId: string): Promise<Slide[]> {
     const rows = await this.prisma.slide.findMany({
       where: { activityId },
-      orderBy: { order: 'asc' },
+      orderBy: [ 
+        { order: 'asc' },
+        { createdAt: 'asc' },
+      ],
     });
     return rows.map((row) =>
       Slide.reconstitute({
