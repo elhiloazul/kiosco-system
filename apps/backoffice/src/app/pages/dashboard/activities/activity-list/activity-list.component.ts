@@ -4,11 +4,12 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { switchMap } from 'rxjs/operators';
 import { ActivityService } from '../activity.service';
 import { Activity } from '../activity.model';
+import { LinkMultiMediaInputComponent } from '../../../editor/slides/link-multi-media-input/link-multi-media-input.component';
 
 @Component({
   selector: 'app-activity-list',
   standalone: true,
-  imports: [ReactiveFormsModule],
+  imports: [ReactiveFormsModule, LinkMultiMediaInputComponent],
   templateUrl: './activity-list.component.html',
 })
 export class ActivityListComponent implements OnInit {
