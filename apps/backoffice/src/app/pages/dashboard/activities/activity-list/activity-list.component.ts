@@ -24,11 +24,22 @@ export class ActivityListComponent implements OnInit {
   readonly togglingId = signal<string | null>(null);
   readonly errorMessage = signal<string | null>(null);
 
+  readonly showMenuModal = signal(false);
+  readonly isSavingMenu = signal(false);
+  readonly errorMenuMessage = signal<string | null>(null);
+  private menuActivityId = '';
+
   private tenantId = '';
   private campaignId = '';
 
   readonly form = this.fb.nonNullable.group({
     name: ['', [Validators.required, Validators.maxLength(100)]],
+  });
+
+  readonly menuForm = this.fb.nonNullable.group({
+    menuOrder: [0, [Validators.required, Validators.min(0)]],
+    audio: [''],
+    popoverDescription: [''],
   });
 
   ngOnInit(): void {
@@ -41,7 +52,7 @@ export class ActivityListComponent implements OnInit {
       })
     ).subscribe({
       next: (activities) => {
-        this.activities.set(activities);
+        this.activities.set(this.sortByMenuOrder(activities));
         this.isLoading.set(false);
       },
       error: () => this.isLoading.set(false),
@@ -98,5 +109,77 @@ export class ActivityListComponent implements OnInit {
       'campaigns', this.campaignId,
       'activities', activity.id, 'editor',
     ]);
+  }
+
+  toggleMenu(activity: Activity): void {
+    if (this.togglingId()) return;
+
+    if (!activity.showInMenu) {
+      this.menuActivityId = activity.id;
+      this.menuForm.reset({
+        menuOrder: activity.menuOrder ?? 0,
+        audio: activity.menuConfig?.audio ?? '',
+        popoverDescription: activity.menuConfig?.popoverDescription ?? '',
+      });
+      this.errorMenuMessage.set(null);
+      this.showMenuModal.set(true);
+    } else {
+      this.togglingId.set(activity.id);
+      this.activityService.update(activity.id, { showInMenu: false }).subscribe({
+        next: (updated) => {
+          this.activities.update((list) => this.sortByMenuOrder(list.map((a) => (a.id === updated.id ? updated : a))));
+          this.togglingId.set(null);
+        },
+        error: () => this.togglingId.set(null),
+      });
+    }
+  }
+
+  openMenuConfig(activity: Activity): void {
+    this.menuActivityId = activity.id;
+    this.menuForm.reset({
+      menuOrder: activity.menuOrder ?? 0,
+      audio: activity.menuConfig?.audio ?? '',
+      popoverDescription: activity.menuConfig?.popoverDescription ?? '',
+    });
+    this.errorMenuMessage.set(null);
+    this.showMenuModal.set(true);
+  }
+
+  closeMenuModal(): void {
+    this.showMenuModal.set(false);
+  }
+
+  private sortByMenuOrder(list: Activity[]): Activity[] {
+    return [...list].sort((a, b) => {
+      if (a.menuOrder === null && b.menuOrder === null) return 0;
+      if (a.menuOrder === null) return 1;
+      if (b.menuOrder === null) return -1;
+      return a.menuOrder - b.menuOrder;
+    });
+  }
+
+  saveMenuConfig(): void {
+    if (this.menuForm.invalid || this.isSavingMenu()) return;
+    this.isSavingMenu.set(true);
+    this.errorMenuMessage.set(null);
+
+    const { menuOrder, audio, popoverDescription } = this.menuForm.getRawValue();
+
+    this.activityService.update(this.menuActivityId, {
+      showInMenu: true,
+      menuOrder,
+      menuConfig: { audio: audio || undefined, popoverDescription: popoverDescription || undefined },
+    }).subscribe({
+      next: (updated) => {
+        this.activities.update((list) => this.sortByMenuOrder(list.map((a) => (a.id === updated.id ? updated : a))));
+        this.isSavingMenu.set(false);
+        this.showMenuModal.set(false);
+      },
+      error: () => {
+        this.errorMenuMessage.set('No se pudo guardar la configuración.');
+        this.isSavingMenu.set(false);
+      },
+    });
   }
 }
