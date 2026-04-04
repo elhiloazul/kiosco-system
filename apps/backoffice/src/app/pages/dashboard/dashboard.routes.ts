@@ -34,6 +34,6 @@ export const dashboardRoutes: Routes = [
   {
     path: 'tenants/:tenantId/kiosks',
     loadComponent: () =>
-      import('./tenants/tenant-dashboard/tenant-dashboard.component').then((m) => m.TenantDashboardComponent), // placeholder
+      import('./kiosks/kiosk-list/kiosk-list.component').then((m) => m.KioskListComponent),
   },
 ];
