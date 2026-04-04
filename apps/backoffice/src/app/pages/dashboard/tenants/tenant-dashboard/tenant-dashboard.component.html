@@ -45,7 +45,7 @@
       <!-- Accesos rápidos -->
       <div class="grid grid-cols-2 gap-3">
         <a
-          [routerLink]="['campaigns']"
+          [routerLink]="['/dashboard/tenants', tenantId(), 'campaigns']"
           class="flex items-center gap-3 p-4 border border-slate-200 rounded-lg hover:border-blue-300 hover:bg-blue-50/30 transition group"
         >
           <div class="w-9 h-9 rounded-lg bg-blue-50 flex items-center justify-center group-hover:bg-blue-100 transition shrink-0">
@@ -60,7 +60,7 @@
         </a>
 
         <a
-          [routerLink]="['kiosks']"
+          [routerLink]="['/dashboard/tenants', tenantId(), 'kiosks']"
           class="flex items-center gap-3 p-4 border border-slate-200 rounded-lg hover:border-blue-300 hover:bg-blue-50/30 transition group"
         >
           <div class="w-9 h-9 rounded-lg bg-blue-50 flex items-center justify-center group-hover:bg-blue-100 transition shrink-0">

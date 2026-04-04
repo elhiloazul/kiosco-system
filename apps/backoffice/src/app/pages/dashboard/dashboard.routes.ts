@@ -19,7 +19,7 @@ export const dashboardRoutes: Routes = [
   {
     path: 'tenants/:tenantId/campaigns',
     loadComponent: () =>
-      import('./tenants/tenant-dashboard/tenant-dashboard.component').then((m) => m.TenantDashboardComponent), // placeholder
+      import('./campaigns/campaign-list/campaign-list.component').then((m) => m.CampaignListComponent),
   },
   {
     path: 'tenants/:tenantId/kiosks',

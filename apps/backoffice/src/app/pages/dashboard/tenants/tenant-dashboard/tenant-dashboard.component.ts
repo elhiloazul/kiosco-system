@@ -15,10 +15,14 @@ export class TenantDashboardComponent implements OnInit {
   private readonly tenantService = inject(TenantService);
 
   readonly tenant = signal<Tenant | null>(null);
+  readonly tenantId = signal<string>('');
 
   ngOnInit(): void {
     this.route.paramMap
-      .pipe(switchMap((params) => this.tenantService.findById(params.get('tenantId')!)))
+      .pipe(switchMap((params) => {
+        this.tenantId.set(params.get('tenantId')!);
+        return this.tenantService.findById(this.tenantId());
+      }))
       .subscribe((t) => this.tenant.set(t));
   }
 }
