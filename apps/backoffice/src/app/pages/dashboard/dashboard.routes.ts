@@ -32,6 +32,11 @@ export const dashboardRoutes: Routes = [
       import('../../pages/editor/activity-editor/activity-editor.component').then((m) => m.ActivityEditorComponent),
   },
   {
+    path: 'profile',
+    loadComponent: () =>
+      import('./profile/profile.component').then((m) => m.ProfileComponent),
+  },
+  {
     path: 'tenants/:tenantId/kiosks',
     loadComponent: () =>
       import('./kiosks/kiosk-list/kiosk-list.component').then((m) => m.KioskListComponent),

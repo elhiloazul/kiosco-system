@@ -13,6 +13,11 @@ export interface LogoutRequest {
   refreshToken: string;
 }
 
+export interface UpdateProfileRequest {
+  name?: string;
+  password?: string;
+}
+
 // ─── Response / Domain models ─────────────────────────────────────────────────
 
 export interface AuthTokens {

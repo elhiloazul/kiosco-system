@@ -1,0 +1,112 @@
+<div class="flex-1 overflow-y-auto px-8 py-6">
+  <div class="max-w-xl flex flex-col gap-6">
+
+    <!-- ── Información del perfil ── -->
+    <div class="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden">
+      <div class="px-6 py-4 border-b border-slate-100">
+        <h2 class="text-sm font-semibold text-slate-900">Información general</h2>
+        <p class="text-xs text-slate-500 mt-0.5">{{ profile()?.email }}</p>
+      </div>
+
+      <form [formGroup]="nameForm" (ngSubmit)="saveName()" class="px-6 py-5 flex flex-col gap-4">
+        <div class="flex flex-col gap-1.5">
+          <label class="text-sm font-semibold text-slate-700">Nombre</label>
+          <input
+            type="text"
+            formControlName="name"
+            class="px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition"
+          />
+        </div>
+
+        @if (errorName()) {
+          <p class="text-sm text-red-500 bg-red-50 px-3 py-2 rounded-lg">{{ errorName() }}</p>
+        }
+
+        <div class="flex items-center justify-between">
+          @if (nameSaved()) {
+            <span class="flex items-center gap-1.5 text-xs text-emerald-600">
+              <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5" />
+              </svg>
+              Cambios guardados
+            </span>
+          } @else {
+            <span></span>
+          }
+          <button
+            type="submit"
+            [disabled]="nameForm.invalid || isSavingName()"
+            class="flex items-center gap-2 px-4 py-2 text-sm font-medium text-white bg-blue-600 rounded-lg hover:bg-blue-700 transition disabled:opacity-50 disabled:cursor-not-allowed"
+          >
+            @if (isSavingName()) {
+              <svg class="w-4 h-4 animate-spin" fill="none" viewBox="0 0 24 24">
+                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4" />
+                <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8H4z" />
+              </svg>
+            }
+            Guardar
+          </button>
+        </div>
+      </form>
+    </div>
+
+    <!-- ── Cambio de contraseña ── -->
+    <div class="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden">
+      <div class="px-6 py-4 border-b border-slate-100">
+        <h2 class="text-sm font-semibold text-slate-900">Cambiar contraseña</h2>
+        <p class="text-xs text-slate-500 mt-0.5">Mínimo 8 caracteres.</p>
+      </div>
+
+      <form [formGroup]="passwordForm" (ngSubmit)="savePassword()" class="px-6 py-5 flex flex-col gap-4">
+
+        <div class="flex flex-col gap-1.5">
+          <label class="text-sm font-semibold text-slate-700">Nueva contraseña</label>
+          <input
+            type="password"
+            formControlName="password"
+            placeholder="••••••••"
+            class="px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition"
+          />
+          @if (passwordForm.get('password')?.touched && passwordForm.get('password')?.hasError('minlength')) {
+            <p class="text-xs text-red-500">Mínimo 8 caracteres</p>
+          }
+        </div>
+
+        <div class="flex flex-col gap-1.5">
+          <label class="text-sm font-semibold text-slate-700">Confirmar contraseña</label>
+          <input
+            type="password"
+            formControlName="confirmPassword"
+            placeholder="••••••••"
+            class="px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition"
+          />
+          @if (passwordForm.touched && passwordForm.hasError('mismatch')) {
+            <p class="text-xs text-red-500">Las contraseñas no coinciden</p>
+          }
+        </div>
+
+        @if (errorPasswordMessage()) {
+          <p class="text-sm text-red-500 bg-red-50 px-3 py-2 rounded-lg">{{ errorPasswordMessage() }}</p>
+        }
+
+        <div class="flex justify-end">
+          <button
+            type="submit"
+            [disabled]="passwordForm.invalid || isSavingPassword()"
+            class="flex items-center gap-2 px-4 py-2 text-sm font-medium text-white bg-blue-600 rounded-lg hover:bg-blue-700 transition disabled:opacity-50 disabled:cursor-not-allowed"
+          >
+            @if (isSavingPassword()) {
+              <svg class="w-4 h-4 animate-spin" fill="none" viewBox="0 0 24 24">
+                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4" />
+                <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8H4z" />
+              </svg>
+            }
+            Actualizar contraseña
+          </button>
+        </div>
+
+      </form>
+    </div>
+
+  </div>
+</div>

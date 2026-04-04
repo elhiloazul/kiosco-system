@@ -3,6 +3,7 @@ import { RouterOutlet, RouterLink, RouterLinkActive, Router, NavigationEnd, Acti
 import { filter } from 'rxjs/operators';
 import { TenantService } from '../tenants/tenant.service';
 import { Tenant } from '../tenants/tenant.model';
+import { AuthService } from '../../../core/auth/auth.service';
 
 @Component({
   selector: 'app-dashboard-layout',
@@ -14,6 +15,7 @@ export class DashboardLayoutComponent implements OnInit {
   private readonly router = inject(Router);
   private readonly activatedRoute = inject(ActivatedRoute);
   private readonly tenantService = inject(TenantService);
+  private readonly authService = inject(AuthService);
 
   readonly tenants = signal<Tenant[]>([]);
   readonly activeTenant = signal<Tenant | null>(null);
@@ -24,6 +26,10 @@ export class DashboardLayoutComponent implements OnInit {
   );
 
   ngOnInit(): void {
+    if (!this.authService.profile()) {
+      this.authService.loadProfile().subscribe();
+    }
+
     this.tenantService.getAll().subscribe((tenants) => this.tenants.set(tenants));
 
     this.router.events

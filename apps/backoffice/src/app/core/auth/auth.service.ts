@@ -8,6 +8,7 @@ import {
   LoginRequest,
   RefreshTokenRequest,
   LogoutRequest,
+  UpdateProfileRequest,
   AuthTokens,
   AdminProfile,
 } from './auth.model';
@@ -58,6 +59,12 @@ export class AuthService {
   loadProfile(): Observable<AdminProfile> {
     return this.http
       .get<AdminProfile>(`${environment.apiUrl}/auth/me`)
+      .pipe(tap((profile) => this._profile.set(profile)));
+  }
+
+  updateProfile(body: UpdateProfileRequest): Observable<AdminProfile> {
+    return this.http
+      .patch<AdminProfile>(`${environment.apiUrl}/auth/profile`, body)
       .pipe(tap((profile) => this._profile.set(profile)));
   }
 
