@@ -99,6 +99,7 @@ model Slide {
   id         String    @id @default(cuid())
   activityId String
   type       SlideType
+  name       String    @default("")
   order      Int       @default(0)
   content    Json
   createdAt  DateTime  @default(now())

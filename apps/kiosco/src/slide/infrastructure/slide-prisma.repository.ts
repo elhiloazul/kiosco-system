@@ -10,12 +10,15 @@ export class SlidePrismaRepository implements ISlideRepository {
   constructor(private readonly prisma: PrismaService) {}
 
   async save(slide: Slide): Promise<void> {
-    await this.prisma.slide.upsert({
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const prismaSlide = this.prisma.slide as any;
+    await prismaSlide.upsert({
       where: { id: slide.id },
       create: {
         id: slide.id,
         activityId: slide.activityId,
         type: slide.type,
+        name: slide.name,
         order: slide.order,
         content: slide.content as Prisma.InputJsonValue,
         createdAt: slide.createdAt,
@@ -23,6 +26,7 @@ export class SlidePrismaRepository implements ISlideRepository {
       },
       update: {
         type: slide.type,
+        name: slide.name,
         order: slide.order,
         content: slide.content as Prisma.InputJsonValue,
         updatedAt: slide.updatedAt,
@@ -31,25 +35,37 @@ export class SlidePrismaRepository implements ISlideRepository {
   }
 
   async findById(id: string): Promise<Slide | null> {
-    const row = await this.prisma.slide.findUnique({ where: { id } });
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const row = await (this.prisma.slide as any).findUnique({ where: { id } });
     if (!row) return null;
     return Slide.reconstitute({
-      ...row,
+      id: row.id,
+      activityId: row.activityId,
       type: row.type as SlideType,
+      name: row.name ?? '',
+      order: row.order,
       content: row.content as Record<string, unknown>,
+      createdAt: row.createdAt,
+      updatedAt: row.updatedAt,
     });
   }
 
   async findByActivityId(activityId: string): Promise<Slide[]> {
-    const rows = await this.prisma.slide.findMany({
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const rows = await (this.prisma.slide as any).findMany({
       where: { activityId },
       orderBy: { order: 'asc' },
     });
-    return rows.map((row) =>
+    return rows.map((row: any) =>
       Slide.reconstitute({
-        ...row,
+        id: row.id,
+        activityId: row.activityId,
         type: row.type as SlideType,
+        name: row.name ?? '',
+        order: row.order,
         content: row.content as Record<string, unknown>,
+        createdAt: row.createdAt,
+        updatedAt: row.updatedAt,
       }),
     );
   }

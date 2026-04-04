@@ -16,6 +16,7 @@ export class GetSlidesByActivityService {
       id: slide.id,
       activityId: slide.activityId,
       type: slide.type,
+      name: slide.name,
       order: slide.order,
       content: slide.content,
       createdAt: slide.createdAt,

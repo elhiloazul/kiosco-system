@@ -16,8 +16,9 @@ export class CreateSlideService {
       id: createId(),
       activityId: input.activityId,
       type: input.type,
+      name: input.name,
       order: input.order,
-      content: input.content,
+      content: input.content ?? {},
     });
 
     await this.slideRepository.save(slide);
@@ -26,6 +27,7 @@ export class CreateSlideService {
       id: slide.id,
       activityId: slide.activityId,
       type: slide.type,
+      name: slide.name,
       order: slide.order,
       content: slide.content,
       createdAt: slide.createdAt,
