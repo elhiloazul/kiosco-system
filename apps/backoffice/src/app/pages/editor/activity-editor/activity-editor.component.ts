@@ -1,4 +1,4 @@
-import { Component, inject, signal, computed, OnInit } from '@angular/core';
+import { Component, inject, signal, computed, OnInit, viewChild } from '@angular/core';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { forkJoin } from 'rxjs';
@@ -26,6 +26,7 @@ export class ActivityEditorComponent implements OnInit {
   private readonly campaignService = inject(CampaignService);
   private readonly activityService = inject(ActivityService);
   private readonly slideService = inject(SlideService);
+  private readonly canvas = viewChild(SlideCanvasComponent);
 
   readonly tenant = signal<Tenant | null>(null);
   readonly campaign = signal<Campaign | null>(null);
@@ -40,6 +41,7 @@ export class ActivityEditorComponent implements OnInit {
   readonly newSlideName = signal('');
   readonly newSlideType = signal<SlideType>(SlideType.IMAGE);
   readonly isCreating = signal(false);
+  readonly deletingId = signal<string | null>(null);
 
   readonly SlideType = SlideType;
   readonly SLIDE_TYPE_LABELS = SLIDE_TYPE_LABELS;
@@ -87,6 +89,10 @@ export class ActivityEditorComponent implements OnInit {
   }
 
   selectSlide(slide: Slide): void {
+    if (this.canvas()?.hasChanges()) {
+      const confirmed = window.confirm('Tienes cambios sin guardar. ¿Deseas descartarlos y cambiar de slide?');
+      if (!confirmed) return;
+    }
     this.activeSlide.set(slide);
     this.showCreateForm.set(false);
   }
@@ -119,6 +125,19 @@ export class ActivityEditorComponent implements OnInit {
         this.isCreating.set(false);
       },
       error: () => this.isCreating.set(false),
+    });
+  }
+
+  deleteSlide(slide: Slide): void {
+    if (!window.confirm(`¿Eliminar el slide "${slide.name}"? Esta acción no se puede deshacer.`)) return;
+    this.deletingId.set(slide.id);
+    this.slideService.delete(slide.id).subscribe({
+      next: () => {
+        this.slides.update(list => list.filter(s => s.id !== slide.id));
+        if (this.activeSlide()?.id === slide.id) this.activeSlide.set(null);
+        this.deletingId.set(null);
+      },
+      error: () => this.deletingId.set(null),
     });
   }
 

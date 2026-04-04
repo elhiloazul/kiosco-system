@@ -24,4 +24,8 @@ export class SlideService {
   update(id: string, body: UpdateSlideRequest): Observable<Slide> {
     return this.http.patch<Slide>(`${this.base}/slides/${id}`, body);
   }
+
+  delete(id: string): Observable<void> {
+    return this.http.delete<void>(`${this.base}/slides/${id}`);
+  }
 }
