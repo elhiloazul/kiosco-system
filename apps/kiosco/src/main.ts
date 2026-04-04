@@ -17,7 +17,6 @@ async function bootstrap() {
     credentials: true,
   });
 
-  app.setGlobalPrefix('v1');
   app.useGlobalFilters(new GlobalExceptionFilter());
   app.useGlobalInterceptors(new ResponseInterceptor());
 

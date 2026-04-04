@@ -1,8 +1,8 @@
 import { Controller, Get, Post, Patch, Body, Param } from '@nestjs/common';
-import { CreateKioskService } from '../../../kiosk/application/create-kiosk.service';
-import { GetKiosksByTenantService } from '../../../kiosk/application/get-kiosks-by-tenant.service';
-import { UpdateKioskService } from '../../../kiosk/application/update-kiosk.service';
-import { CreateKioskInputDto, UpdateKioskInputDto } from '../../../kiosk/application/kiosk.dto';
+import { CreateKioskService } from '@kiosk/application/create-kiosk.service';
+import { GetKiosksByTenantService } from '@kiosk/application/get-kiosks-by-tenant.service';
+import { UpdateKioskService } from '@kiosk/application/update-kiosk.service';
+import { CreateKioskInputDto, UpdateKioskInputDto } from '@kiosk/application/kiosk.dto';
 
 @Controller()
 export class KioskController {

@@ -4,7 +4,7 @@ import { TenantPrismaRepository } from './tenant-prisma.repository';
 import { CreateTenantService } from '../application/create-tenant.service';
 import { GetAllTenantsService } from '../application/get-all-tenants.service';
 import { PrismaService } from '../../shared/infrastructure/prisma.service';
-import { TenantController } from '../../entrypoints/web/tenant/tenant.controller';
+import { TenantController } from '../../entrypoints/web/tenant/backoffice/tenant.controller';
 
 @Module({
   controllers: [TenantController],

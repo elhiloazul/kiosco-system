@@ -5,7 +5,7 @@ import { CreateKioskService } from '../application/create-kiosk.service';
 import { GetKiosksByTenantService } from '../application/get-kiosks-by-tenant.service';
 import { UpdateKioskService } from '../application/update-kiosk.service';
 import { PrismaService } from '../../shared/infrastructure/prisma.service';
-import { KioskController } from '../../entrypoints/web/kiosk/kiosk.controller';
+import { KioskController } from '../../entrypoints/web/kiosk/backoffice/kiosk.controller';
 
 @Module({
   controllers: [KioskController],

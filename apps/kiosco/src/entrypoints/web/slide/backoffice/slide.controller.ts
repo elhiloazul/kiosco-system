@@ -1,10 +1,10 @@
 import { Controller, Get, Post, Patch, Delete, Body, Param, HttpCode, HttpStatus } from '@nestjs/common';
-import { CreateSlideService } from '../../../slide/application/create-slide.service';
-import { GetSlidesByActivityService } from '../../../slide/application/get-slides-by-activity.service';
-import { GetSlideByIdService } from '../../../slide/application/get-slide-by-id.service';
-import { UpdateSlideService } from '../../../slide/application/update-slide.service';
-import { DeleteSlideService } from '../../../slide/application/delete-slide.service';
-import { CreateSlideInputDto, UpdateSlideInputDto } from '../../../slide/application/slide.dto';
+import { CreateSlideService } from '@slide/application/create-slide.service';
+import { GetSlidesByActivityService } from '@slide/application/get-slides-by-activity.service';
+import { GetSlideByIdService } from '@slide/application/get-slide-by-id.service';
+import { UpdateSlideService } from '@slide/application/update-slide.service';
+import { DeleteSlideService } from '@slide/application/delete-slide.service';
+import { CreateSlideInputDto, UpdateSlideInputDto } from '@slide/application/slide.dto';
 
 @Controller()
 export class SlideController {

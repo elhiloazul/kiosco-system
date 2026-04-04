@@ -1,8 +1,8 @@
 import { Controller, Get, Post, Patch, Body, Param } from '@nestjs/common';
-import { CreateActivityService } from '../../../activity/application/create-activity.service';
-import { GetActivitiesByCampaignService } from '../../../activity/application/get-activities-by-campaign.service';
-import { UpdateActivityService } from '../../../activity/application/update-activity.service';
-import { CreateActivityInputDto, UpdateActivityInputDto } from '../../../activity/application/activity.dto';
+import { CreateActivityService } from '@activity/application/create-activity.service';
+import { GetActivitiesByCampaignService } from '@activity/application/get-activities-by-campaign.service';
+import { UpdateActivityService } from '@activity/application/update-activity.service';
+import { CreateActivityInputDto, UpdateActivityInputDto } from '@activity/application/activity.dto';
 
 @Controller()
 export class ActivityController {

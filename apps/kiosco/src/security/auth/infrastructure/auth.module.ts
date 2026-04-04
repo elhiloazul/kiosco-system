@@ -10,7 +10,7 @@ import { LogoutService } from '../application/logout.service';
 import { GetMeService } from '../application/get-me.service';
 import { UpdateProfileService } from '../application/update-profile.service';
 import { PrismaService } from '../../../shared/infrastructure/prisma.service';
-import { AuthController } from '../../../entrypoints/web/auth/auth.controller';
+import { AuthController } from '../../../entrypoints/web/auth/backoffice/auth.controller';
 import type { StringValue } from 'ms';
 
 @Module({

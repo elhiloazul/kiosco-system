@@ -1,17 +1,17 @@
 import { Controller, Post, Get, Patch, Body } from '@nestjs/common';
-import { Public } from '../../../security/guards/public.decorator';
-import { CurrentAdmin, JwtPayload } from '../../../security/guards/current-admin.decorator';
-import { LoginService } from '../../../security/auth/application/login.service';
-import { RefreshTokenService } from '../../../security/auth/application/refresh-token.service';
-import { LogoutService } from '../../../security/auth/application/logout.service';
-import { GetMeService } from '../../../security/auth/application/get-me.service';
-import { UpdateProfileService } from '../../../security/auth/application/update-profile.service';
+import { Public } from '@security/guards/public.decorator';
+import { CurrentAdmin, JwtPayload } from '@security/guards/current-admin.decorator';
+import { LoginService } from '@security/auth/application/login.service';
+import { RefreshTokenService } from '@security/auth/application/refresh-token.service';
+import { LogoutService } from '@security/auth/application/logout.service';
+import { GetMeService } from '@security/auth/application/get-me.service';
+import { UpdateProfileService } from '@security/auth/application/update-profile.service';
 import {
   LoginInputDto,
   RefreshTokenInputDto,
   LogoutInputDto,
   UpdateProfileInputDto,
-} from '../../../security/auth/application/auth.dto';
+} from '@security/auth/application/auth.dto';
 
 @Controller('auth')
 export class AuthController {

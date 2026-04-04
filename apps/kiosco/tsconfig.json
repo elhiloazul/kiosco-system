@@ -9,7 +9,13 @@
     "baseUrl": ".",
     "paths": {
       "@kiosco/database": ["../../packages/database/dist"],
-      "@kiosco/shared-kernel": ["../../packages/shared-kernel/dist"]
+      "@kiosco/shared-kernel": ["../../packages/shared-kernel/dist"],
+      "@tenant/*": ["src/tenant/*"],
+      "@campaign/*": ["src/campaign/*"],
+      "@activity/*": ["src/activity/*"],
+      "@slide/*": ["src/slide/*"],
+      "@kiosk/*": ["src/kiosk/*"],
+      "@security/*": ["src/security/*"]
     }
   },
   "include": ["src/**/*"],

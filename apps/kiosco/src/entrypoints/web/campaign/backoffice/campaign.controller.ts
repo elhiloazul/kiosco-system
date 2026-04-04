@@ -1,8 +1,8 @@
 import { Controller, Get, Post, Patch, Body, Param } from '@nestjs/common';
-import { CreateCampaignService } from '../../../campaign/application/create-campaign.service';
-import { GetCampaignsByTenantService } from '../../../campaign/application/get-campaigns-by-tenant.service';
-import { UpdateCampaignService } from '../../../campaign/application/update-campaign.service';
-import { CreateCampaignInputDto, UpdateCampaignInputDto } from '../../../campaign/application/campaign.dto';
+import { CreateCampaignService } from '@campaign/application/create-campaign.service';
+import { GetCampaignsByTenantService } from '@campaign/application/get-campaigns-by-tenant.service';
+import { UpdateCampaignService } from '@campaign/application/update-campaign.service';
+import { CreateCampaignInputDto, UpdateCampaignInputDto } from '@campaign/application/campaign.dto';
 
 @Controller()
 export class CampaignController {
