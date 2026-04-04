@@ -1,3 +1,10 @@
+// ─── Shared ───────────────────────────────────────────────────────────────────
+
+export interface MenuConfig {
+  audio?: string;
+  popoverDescription?: string;
+}
+
 // ─── Request interfaces ───────────────────────────────────────────────────────
 
 export interface CreateActivityRequest {
@@ -7,6 +14,9 @@ export interface CreateActivityRequest {
 export interface UpdateActivityRequest {
   name?: string;
   isActive?: boolean;
+  showInMenu?: boolean;
+  menuOrder?: number | null;
+  menuConfig?: MenuConfig | null;
 }
 
 // ─── Domain models ────────────────────────────────────────────────────────────
@@ -17,6 +27,9 @@ export interface Activity {
   name: string;
   order: number;
   isActive: boolean;
+  showInMenu: boolean;
+  menuOrder: number | null;
+  menuConfig: MenuConfig | null;
   createdAt: string;
   updatedAt: string;
 }

@@ -24,6 +24,9 @@ export class UpdateActivityService {
       name: activity.name,
       order: activity.order,
       isActive: activity.isActive,
+      showInMenu: activity.showInMenu,
+      menuOrder: activity.menuOrder,
+      menuConfig: activity.menuConfig,
       createdAt: activity.createdAt,
       updatedAt: activity.updatedAt,
     };

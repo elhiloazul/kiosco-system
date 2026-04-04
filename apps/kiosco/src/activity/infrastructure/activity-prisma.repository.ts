@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from '../../shared/infrastructure/prisma.service';
-import { Activity } from '../domain/activity';
+import { Activity, MenuConfig } from '../domain/activity';
 import { IActivityRepository } from '../domain/activity.repository';
 
 @Injectable()
@@ -16,6 +16,9 @@ export class ActivityPrismaRepository implements IActivityRepository {
         name: activity.name,
         order: activity.order,
         isActive: activity.isActive,
+        showInMenu: activity.showInMenu,
+        menuOrder: activity.menuOrder,
+        menuConfig: activity.menuConfig ?? undefined,
         createdAt: activity.createdAt,
         updatedAt: activity.updatedAt,
       },
@@ -23,6 +26,9 @@ export class ActivityPrismaRepository implements IActivityRepository {
         name: activity.name,
         order: activity.order,
         isActive: activity.isActive,
+        showInMenu: activity.showInMenu,
+        menuOrder: activity.menuOrder,
+        menuConfig: activity.menuConfig ?? undefined,
         updatedAt: activity.updatedAt,
       },
     });
@@ -31,7 +37,7 @@ export class ActivityPrismaRepository implements IActivityRepository {
   async findById(id: string): Promise<Activity | null> {
     const row = await this.prisma.activity.findUnique({ where: { id } });
     if (!row) return null;
-    return Activity.reconstitute(row);
+    return Activity.reconstitute({ ...row, menuConfig: row.menuConfig as MenuConfig | null });
   }
 
   async findByCampaignId(campaignId: string): Promise<Activity[]> {
@@ -39,6 +45,8 @@ export class ActivityPrismaRepository implements IActivityRepository {
       where: { campaignId },
       orderBy: { order: 'asc' },
     });
-    return rows.map((row) => Activity.reconstitute(row));
+    return rows.map((row) =>
+      Activity.reconstitute({ ...row, menuConfig: row.menuConfig as MenuConfig | null }),
+    );
   }
 }
