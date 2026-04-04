@@ -1,8 +1,9 @@
-import { Controller, Get, Post, Patch, Body, Param } from '@nestjs/common';
+import { Controller, Get, Post, Patch, Delete, Body, Param, HttpCode, HttpStatus } from '@nestjs/common';
 import { CreateSlideService } from '../../../slide/application/create-slide.service';
 import { GetSlidesByActivityService } from '../../../slide/application/get-slides-by-activity.service';
 import { GetSlideByIdService } from '../../../slide/application/get-slide-by-id.service';
 import { UpdateSlideService } from '../../../slide/application/update-slide.service';
+import { DeleteSlideService } from '../../../slide/application/delete-slide.service';
 import { CreateSlideInputDto, UpdateSlideInputDto } from '../../../slide/application/slide.dto';
 
 @Controller()
@@ -12,6 +13,7 @@ export class SlideController {
     private readonly getSlidesByActivity: GetSlidesByActivityService,
     private readonly getSlideById: GetSlideByIdService,
     private readonly updateSlide: UpdateSlideService,
+    private readonly deleteSlide: DeleteSlideService,
   ) {}
 
   @Post('activities/:activityId/slides')
@@ -34,5 +36,11 @@ export class SlideController {
   update(@Param('id') id: string, @Body() body: unknown) {
     const input = UpdateSlideInputDto.parse({ id, ...(body as object) });
     return this.updateSlide.execute(input);
+  }
+
+  @Delete('slides/:id')
+  @HttpCode(HttpStatus.NO_CONTENT)
+  remove(@Param('id') id: string) {
+    return this.deleteSlide.execute(id);
   }
 }

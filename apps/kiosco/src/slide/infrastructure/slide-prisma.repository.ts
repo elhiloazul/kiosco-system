@@ -42,6 +42,10 @@ export class SlidePrismaRepository implements ISlideRepository {
     });
   }
 
+  async delete(id: string): Promise<void> {
+    await this.prisma.slide.delete({ where: { id } });
+  }
+
   async findByActivityId(activityId: string): Promise<Slide[]> {
     const rows = await this.prisma.slide.findMany({
       where: { activityId },
