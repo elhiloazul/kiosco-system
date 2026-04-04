@@ -1,0 +1,209 @@
+<div class="max-w-4xl mx-auto p-6">
+  <div class="bg-white rounded-xl border border-slate-200 shadow-sm">
+
+    <!-- ── Header ── -->
+    <div class="px-6 py-5 border-b border-slate-100 flex items-center gap-3">
+      <div class="w-9 h-9 rounded-lg bg-slate-100 flex items-center justify-center shrink-0">
+        <svg class="w-5 h-5 text-slate-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+          <path [attr.d]="slideTypeIconPath(slide().type)" stroke-linecap="round" stroke-linejoin="round" />
+        </svg>
+      </div>
+      <div class="min-w-0 flex-1">
+        <h2 class="text-lg font-bold text-slate-900 truncate">{{ slide().name }}</h2>
+        <span class="text-xs font-medium text-slate-400 uppercase tracking-wide">
+          {{ SLIDE_TYPE_LABELS[slide().type] }}
+        </span>
+      </div>
+    </div>
+
+    <!-- ── Body ── -->
+    <div class="p-6 flex flex-col gap-8">
+
+      <!-- Ajustes generales -->
+      <section class="flex flex-col gap-4">
+        <h3 class="text-xs font-semibold text-slate-500 uppercase tracking-wider">Ajustes Generales</h3>
+
+        <div class="flex flex-col gap-1.5">
+          <label class="text-sm font-semibold text-slate-700">Imagen de fondo</label>
+          <app-link-multi-media-input
+            [value]="backgroundImage()"
+            mediaType="image"
+            placeholder="URL de la imagen de fondo..."
+            (valueChange)="backgroundImage.set($event); markChanged()"
+          />
+        </div>
+
+        <div class="flex flex-col gap-1.5">
+          <label class="text-sm font-semibold text-slate-700">Audio</label>
+          <app-link-multi-media-input
+            [value]="audio()"
+            mediaType="audio"
+            placeholder="URL del archivo de audio..."
+            (valueChange)="audio.set($event); markChanged()"
+          />
+        </div>
+      </section>
+
+      <!-- Contenido específico por tipo -->
+      <section class="flex flex-col gap-4">
+        <h3 class="text-xs font-semibold text-slate-500 uppercase tracking-wider">Contenido</h3>
+
+        @switch (slide().type) {
+
+          @case (SlideType.IMAGE) {
+            <div class="flex flex-col gap-1.5">
+              <label class="text-sm font-semibold text-slate-700">Imagen</label>
+              <app-link-multi-media-input
+                [value]="imageUrl()"
+                mediaType="image"
+                placeholder="URL de la imagen..."
+                (valueChange)="imageUrl.set($event); markChanged()"
+              />
+            </div>
+
+            <div class="flex flex-col gap-1.5">
+              <label class="text-sm font-semibold text-slate-700">Texto</label>
+              <textarea
+                [value]="mediaText()"
+                (input)="mediaText.set($any($event.target).value); markChanged()"
+                rows="3"
+                placeholder="Texto opcional que acompaña la imagen..."
+                class="px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm text-slate-700 placeholder:text-slate-400 outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition resize-none"
+              ></textarea>
+            </div>
+
+            <div class="flex items-center gap-3">
+              <button
+                type="button"
+                (click)="isButtonPause.set(!isButtonPause()); markChanged()"
+                class="relative inline-flex h-5 w-9 shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200"
+                [class.bg-blue-600]="isButtonPause()"
+                [class.bg-slate-200]="!isButtonPause()"
+              >
+                <span
+                  class="inline-block h-4 w-4 transform rounded-full bg-white shadow transition duration-200"
+                  [class.translate-x-4]="isButtonPause()"
+                  [class.translate-x-0]="!isButtonPause()"
+                ></span>
+              </button>
+              <label class="text-sm font-semibold text-slate-700 cursor-pointer" (click)="isButtonPause.set(!isButtonPause()); markChanged()">
+                Botón de pausa
+              </label>
+            </div>
+          }
+
+          @case (SlideType.VIDEO) {
+            <div class="flex flex-col gap-1.5">
+              <label class="text-sm font-semibold text-slate-700">Video</label>
+              <app-link-multi-media-input
+                [value]="videoUrl()"
+                mediaType="video"
+                placeholder="URL del video..."
+                (valueChange)="videoUrl.set($event); markChanged()"
+              />
+            </div>
+
+            <div class="flex flex-col gap-1.5">
+              <label class="text-sm font-semibold text-slate-700">Texto</label>
+              <textarea
+                [value]="mediaText()"
+                (input)="mediaText.set($any($event.target).value); markChanged()"
+                rows="3"
+                placeholder="Texto opcional que acompaña el video..."
+                class="px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm text-slate-700 placeholder:text-slate-400 outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition resize-none"
+              ></textarea>
+            </div>
+          }
+
+          @case (SlideType.DOCUMENT) {
+            <div class="flex flex-col gap-1.5">
+              <label class="text-sm font-semibold text-slate-700">Documento</label>
+              <app-link-multi-media-input
+                [value]="documentUrl()"
+                mediaType="document"
+                placeholder="URL del documento..."
+                (valueChange)="documentUrl.set($event); markChanged()"
+              />
+            </div>
+
+            <div class="flex flex-col gap-1.5">
+              <label class="text-sm font-semibold text-slate-700">Texto</label>
+              <textarea
+                [value]="mediaText()"
+                (input)="mediaText.set($any($event.target).value); markChanged()"
+                rows="3"
+                placeholder="Texto opcional que acompaña el documento..."
+                class="px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm text-slate-700 placeholder:text-slate-400 outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition resize-none"
+              ></textarea>
+            </div>
+          }
+
+          @case (SlideType.TEXT) {
+            <div class="flex flex-col gap-1.5">
+              <label class="text-sm font-semibold text-slate-700">Texto</label>
+              <!-- Toolbar básica -->
+              <div class="border border-slate-200 rounded-xl overflow-hidden">
+                <div class="flex items-center gap-1 px-3 py-2 bg-slate-50 border-b border-slate-200">
+                  <button type="button" class="px-2 py-1 text-xs font-bold text-slate-600 hover:bg-slate-200 rounded transition">B</button>
+                  <button type="button" class="px-2 py-1 text-xs italic text-slate-600 hover:bg-slate-200 rounded transition">I</button>
+                  <button type="button" class="px-2 py-1 text-xs underline text-slate-600 hover:bg-slate-200 rounded transition">U</button>
+                </div>
+                <textarea
+                  [value]="text()"
+                  (input)="text.set($any($event.target).value); markChanged()"
+                  rows="6"
+                  placeholder="Escribe el contenido del slide..."
+                  class="w-full px-4 py-3 bg-white text-sm text-slate-700 placeholder:text-slate-400 outline-none resize-none"
+                ></textarea>
+              </div>
+            </div>
+          }
+
+          @case (SlideType.CUSTOM) {
+            <div class="flex flex-col gap-1.5">
+              <label class="text-sm font-semibold text-slate-700">Componente</label>
+              <input
+                type="text"
+                [value]="component()"
+                (input)="component.set($any($event.target).value); markChanged()"
+                placeholder="Ej: TriviaComponent"
+                class="px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm text-slate-700 placeholder:text-slate-400 outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition"
+              />
+              <p class="text-xs text-slate-400">Nombre del componente Angular que se renderizará en el kiosco.</p>
+            </div>
+          }
+
+        }
+      </section>
+
+    </div>
+
+    <!-- ── Footer ── -->
+    <div class="px-6 py-4 bg-slate-50 border-t border-slate-100 rounded-b-xl flex items-center justify-between">
+      <button
+        type="button"
+        (click)="reset()"
+        [disabled]="!hasChanges() || isSaving()"
+        class="px-4 py-2 text-sm font-medium text-slate-600 bg-white border border-slate-200 rounded-lg hover:bg-slate-50 transition disabled:opacity-40 disabled:cursor-not-allowed"
+      >
+        Cancelar
+      </button>
+
+      <button
+        type="button"
+        (click)="save()"
+        [disabled]="!hasChanges() || isSaving()"
+        class="flex items-center gap-2 px-4 py-2 text-sm font-medium text-white bg-blue-600 rounded-lg hover:bg-blue-700 transition disabled:opacity-50 disabled:cursor-not-allowed"
+      >
+        @if (isSaving()) {
+          <svg class="w-4 h-4 animate-spin" fill="none" viewBox="0 0 24 24">
+            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4" />
+            <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8H4z" />
+          </svg>
+        }
+        Guardar Cambios
+      </button>
+    </div>
+
+  </div>
+</div>

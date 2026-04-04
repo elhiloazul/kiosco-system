@@ -10,13 +10,12 @@ import { Tenant } from '../../dashboard/tenants/tenant.model';
 import { Campaign } from '../../dashboard/campaigns/campaign.model';
 import { Activity } from '../../dashboard/activities/activity.model';
 import { Slide, SlideType, SLIDE_TYPE_LABELS } from '../slides/slide.model';
-
-export type SaveStatus = 'saved' | 'saving' | 'unsaved';
+import { SlideCanvasComponent } from '../slides/slide-canvas/slide-canvas.component';
 
 @Component({
   selector: 'app-activity-editor',
   standalone: true,
-  imports: [RouterLink, FormsModule],
+  imports: [RouterLink, FormsModule, SlideCanvasComponent],
   templateUrl: './activity-editor.component.html',
   host: { class: 'flex-1 flex flex-col overflow-hidden' },
 })
@@ -33,7 +32,6 @@ export class ActivityEditorComponent implements OnInit {
   readonly activity = signal<Activity | null>(null);
   readonly slides = signal<Slide[]>([]);
   readonly activeSlide = signal<Slide | null>(null);
-  readonly saveStatus = signal<SaveStatus>('saved');
   readonly isLoadingContext = signal(true);
   readonly isLoadingSlides = signal(false);
 
@@ -122,6 +120,11 @@ export class ActivityEditorComponent implements OnInit {
       },
       error: () => this.isCreating.set(false),
     });
+  }
+
+  onSlideSaved(updated: Slide): void {
+    this.slides.update(list => list.map(s => s.id === updated.id ? updated : s));
+    this.activeSlide.set(updated);
   }
 
   goBack(): void {
