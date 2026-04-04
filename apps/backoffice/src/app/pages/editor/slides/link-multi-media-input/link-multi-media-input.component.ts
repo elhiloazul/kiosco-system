@@ -1,4 +1,5 @@
-import { Component, computed, effect, input, output, signal } from '@angular/core';
+import { Component, computed, effect, inject, input, output, signal } from '@angular/core';
+import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 
 export type MediaType = 'video' | 'image' | 'document' | 'audio';
 type ValidationState = 'idle' | 'validating' | 'valid' | 'invalid';
@@ -34,6 +35,30 @@ export class LinkMultiMediaInputComponent {
     }
   });
 
+  private readonly sanitizer = inject(DomSanitizer);
+
+  readonly youtubeEmbedUrl = computed<SafeResourceUrl | null>(() => {
+    const url = this.inputValue();
+    try {
+      const parsed = new URL(url);
+      let videoId: string | null = null;
+
+      if (parsed.hostname.includes('youtube.com')) {
+        videoId = parsed.searchParams.get('v');
+      } else if (parsed.hostname === 'youtu.be') {
+        videoId = parsed.pathname.slice(1);
+      }
+
+      return videoId
+        ? this.sanitizer.bypassSecurityTrustResourceUrl(`https://www.youtube.com/embed/${videoId}`)
+        : null;
+    } catch {
+      return null;
+    }
+  });
+
+  readonly isYoutube = computed(() => this.youtubeEmbedUrl() !== null);
+
   constructor() {
     effect(() => {
       const v = this.value();
@@ -52,6 +77,12 @@ export class LinkMultiMediaInputComponent {
   validate(): void {
     const url = this.inputValue();
     if (!url) return;
+
+    if (this.isYoutube()) {
+      this.validationState.set('valid');
+      return;
+    }
+
     this.validationState.set('validating');
     fetch(url, { method: 'HEAD', mode: 'no-cors' })
       .then(() => this.validationState.set('valid'))
