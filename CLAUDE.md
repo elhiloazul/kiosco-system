@@ -36,7 +36,7 @@ Se implementa **Domain-Driven Design (DDD)** y **Arquitectura Hexagonal**. Cada 
 
 ---
 ## Estructura del proyecto
-
+```
 kiosco-system/
 ├── apps/
 │   ├── kiosco/                        # Backend (El Cerebro)
@@ -92,6 +92,8 @@ kiosco-system/
 ├── turbo.json                      # Configuración de Orquestación de Turbo
 └──  package.json                    # Workspaces y Scripts globales
 ---
+```
+
 ## 📋 Especificación de cada subdominio.
 - **`domain`:** Contiene el modelo de dominio: una clase de agregado validada internamente con Zod. Los Value Objects solo se crean cuando el concepto tiene identidad propia o comportamiento más allá de validación (ej. `Email`, `Money`). 
 - **`application`:** Contiene los servicios (casos de uso), ademas cada caso de uso puede tener un InputDTO para los parámetos de entrada del caso de uso, y un OutputDTO para los parámetros de salida del caso de uso. Los DTO pueden estar
