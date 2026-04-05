@@ -40,6 +40,12 @@ export class KioskPrismaRepository implements IKioskRepository {
     return Kiosk.reconstitute(row);
   }
 
+  async findByApiKey(apiKey: string): Promise<Kiosk | null> {
+    const row = await this.prisma.kiosk.findUnique({ where: { apiKey } });
+    if (!row) return null;
+    return Kiosk.reconstitute(row);
+  }
+
   async findByTenantId(tenantId: string): Promise<Kiosk[]> {
     const rows = await this.prisma.kiosk.findMany({
       where: { tenantId },

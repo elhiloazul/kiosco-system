@@ -49,4 +49,14 @@ export class ActivityPrismaRepository implements IActivityRepository {
       Activity.reconstitute({ ...row, menuConfig: row.menuConfig as MenuConfig | null }),
     );
   }
+
+  async findMenuByCampaignId(campaignId: string): Promise<Activity[]> {
+    const rows = await this.prisma.activity.findMany({
+      where: { campaignId, showInMenu: true, isActive: true },
+      orderBy: { menuOrder: 'asc' },
+    });
+    return rows.map((row) =>
+      Activity.reconstitute({ ...row, menuConfig: row.menuConfig as MenuConfig | null }),
+    );
+  }
 }

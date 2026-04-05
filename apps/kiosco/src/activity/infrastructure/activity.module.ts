@@ -19,5 +19,6 @@ import { ActivityController } from '../../entrypoints/web/activity/backoffice/ac
     GetActivitiesByCampaignService,
     UpdateActivityService,
   ],
+  exports: [ACTIVITY_REPOSITORY, PrismaService],
 })
 export class ActivityModule {}
