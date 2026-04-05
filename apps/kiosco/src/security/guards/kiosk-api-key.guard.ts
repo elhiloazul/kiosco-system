@@ -7,6 +7,7 @@ export interface KioskPayload {
   id: string;
   tenantId: string;
   name: string;
+  campaignId: string | null;
 }
 
 @Injectable()
@@ -34,6 +35,7 @@ export class KioskApiKeyGuard implements CanActivate {
       id: kiosk.id,
       tenantId: kiosk.tenantId,
       name: kiosk.name,
+      campaignId: kiosk.campaignId,
     };
 
     return true;
