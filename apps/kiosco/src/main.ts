@@ -10,10 +10,12 @@ import { ResponseInterceptor } from './entrypoints/web/response.interceptor';
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
+  const allowedOrigins = (process.env.CORS_ORIGIN ?? '').split(',').map((o) => o.trim());
+
   app.enableCors({
-    origin: process.env.CORS_ORIGIN,
+    origin: allowedOrigins,
     methods: ['GET', 'POST', 'PATCH', 'DELETE', 'OPTIONS'],
-    allowedHeaders: ['Content-Type', 'Authorization'],
+    allowedHeaders: ['Content-Type', 'Authorization', 'x-api-key'],
     credentials: true,
   });
 
