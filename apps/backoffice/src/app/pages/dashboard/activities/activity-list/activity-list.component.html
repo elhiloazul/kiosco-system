@@ -58,7 +58,38 @@
 
               <!-- Nombre -->
               <td class="px-6 py-4">
-                <p class="font-medium text-slate-900">{{ activity.name }}</p>
+                @if (editingId() === activity.id) {
+                  <form [formGroup]="editNameForm" (ngSubmit)="saveEditName(activity)" class="flex items-center gap-2">
+                    <input
+                      formControlName="name"
+                      type="text"
+                      class="px-3 py-1.5 bg-slate-50 border border-slate-200 rounded-lg text-sm text-slate-900 outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500"
+                    />
+                    <button type="submit" [disabled]="isSavingEdit()" class="text-blue-600 hover:text-blue-700 transition">
+                      <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5" />
+                      </svg>
+                    </button>
+                    <button type="button" (click)="cancelEditName()" class="text-slate-400 hover:text-slate-600 transition">
+                      <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+                      </svg>
+                    </button>
+                  </form>
+                } @else {
+                  <div class="flex items-center gap-2 group">
+                    <p class="font-medium text-slate-900">{{ activity.name }}</p>
+                    <button
+                      (click)="startEditName(activity)"
+                      class="text-slate-300 hover:text-blue-600 transition opacity-0 group-hover:opacity-100"
+                      title="Editar nombre"
+                    >
+                      <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125" />
+                      </svg>
+                    </button>
+                  </div>
+                }
               </td>
 
               <!-- Toggle isActive -->
@@ -172,11 +203,11 @@
   <div class="fixed inset-0 z-50 flex items-center justify-center px-4">
     <div class="absolute inset-0 bg-slate-900/40 backdrop-blur-sm" (click)="closeMenuModal()"></div>
 
-    <div class="relative bg-white rounded-xl shadow-md border border-slate-200 w-full max-w-md">
+    <div class="relative bg-white rounded-xl shadow-md border border-slate-200 w-full max-w-lg">
       <div class="flex items-center justify-between px-6 py-4 border-b border-slate-100">
         <div>
-          <h2 class="text-sm font-semibold text-slate-900">Configuración de menú</h2>
-          <p class="text-xs text-slate-500 mt-0.5">Define cómo se presenta esta actividad en el tutorial.</p>
+          <h2 class="text-sm font-semibold text-slate-900">{{ menuActivityName() }}</h2>
+          <p class="text-xs text-slate-500 mt-0.5">Configuración de menú — define cómo se presenta en el tutorial.</p>
         </div>
         <button (click)="closeMenuModal()" class="text-slate-400 hover:text-slate-600 transition">
           <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">

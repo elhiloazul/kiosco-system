@@ -28,7 +28,14 @@ export class ActivityListComponent implements OnInit {
   readonly showMenuModal = signal(false);
   readonly isSavingMenu = signal(false);
   readonly errorMenuMessage = signal<string | null>(null);
+  readonly menuActivityName = signal('');
   private menuActivityId = '';
+
+  readonly editingId = signal<string | null>(null);
+  readonly isSavingEdit = signal(false);
+  readonly editNameForm = this.fb.nonNullable.group({
+    name: ['', [Validators.required, Validators.maxLength(100)]],
+  });
 
   private tenantId = '';
   private campaignId = '';
@@ -117,6 +124,7 @@ export class ActivityListComponent implements OnInit {
 
     if (!activity.showInMenu) {
       this.menuActivityId = activity.id;
+      this.menuActivityName.set(activity.name);
       this.menuForm.reset({
         menuOrder: activity.menuOrder ?? 0,
         audio: activity.menuConfig?.audio ?? '',
@@ -138,6 +146,7 @@ export class ActivityListComponent implements OnInit {
 
   openMenuConfig(activity: Activity): void {
     this.menuActivityId = activity.id;
+    this.menuActivityName.set(activity.name);
     this.menuForm.reset({
       menuOrder: activity.menuOrder ?? 0,
       audio: activity.menuConfig?.audio ?? '',
@@ -145,6 +154,29 @@ export class ActivityListComponent implements OnInit {
     });
     this.errorMenuMessage.set(null);
     this.showMenuModal.set(true);
+  }
+
+  startEditName(activity: Activity): void {
+    this.editingId.set(activity.id);
+    this.editNameForm.reset({ name: activity.name });
+  }
+
+  cancelEditName(): void {
+    this.editingId.set(null);
+  }
+
+  saveEditName(activity: Activity): void {
+    if (this.editNameForm.invalid || this.isSavingEdit()) return;
+    this.isSavingEdit.set(true);
+
+    this.activityService.update(activity.id, { name: this.editNameForm.getRawValue().name }).subscribe({
+      next: (updated) => {
+        this.activities.update((list) => list.map((a) => (a.id === updated.id ? updated : a)));
+        this.isSavingEdit.set(false);
+        this.editingId.set(null);
+      },
+      error: () => this.isSavingEdit.set(false),
+    });
   }
 
   closeMenuModal(): void {
