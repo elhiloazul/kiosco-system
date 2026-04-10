@@ -23,5 +23,6 @@ import { SlideController } from '../../entrypoints/web/slide/backoffice/slide.co
     UpdateSlideService,
     DeleteSlideService,
   ],
+  exports: [SLIDE_REPOSITORY],
 })
 export class SlideModule {}
