@@ -26,8 +26,6 @@ packages/*/src/**/*.map
 .env.test.local
 .env.production.local
 
-# Prisma
-packages/database/prisma/migrations
 
 # Logs
 npm-debug.log*
