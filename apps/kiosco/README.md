@@ -160,6 +160,67 @@ npm run db:push
 
 ---
 
+## Deploy en Vercel
+
+La API corre como **Serverless Function** en Vercel. El punto de entrada es `api/index.ts`, que envuelve NestJS con un `ExpressAdapter` y cachea la instancia para minimizar el cold start.
+
+### Proyectos en Vercel
+
+Se crean **dos proyectos separados** en Vercel, ambos apuntando al mismo repositorio:
+
+| Proyecto | Root Directory | App |
+| :--- | :--- | :--- |
+| `kiosco-api` | `apps/kiosco` | API NestJS |
+| `kiosco-backoffice` | `apps/backoffice` | Angular SPA |
+
+### Configuración del proyecto `kiosco-api`
+
+En el dashboard de Vercel, al crear el proyecto:
+
+- **Root Directory:** `apps/kiosco`
+- **Framework Preset:** Other
+- **Install Command:** _(dejar en blanco — Vercel detecta el monorepo)_
+- **Build Command:**
+  ```
+  cd ../../packages/database && npm run build && npx prisma migrate deploy && cd ../../apps/kiosco && npx ts-node -r tsconfig-paths/register src/entrypoints/cli/seed-admin.ts
+  ```
+- **Output Directory:** _(dejar en blanco)_
+
+### Variables de entorno — `kiosco-api`
+
+Configurar en Vercel → Settings → Environment Variables:
+
+```env
+DATABASE_URL=        # URL pooled de Vercel Postgres
+DIRECT_URL=          # URL directa de Vercel Postgres (para migraciones)
+JWT_SECRET=
+JWT_REFRESH_SECRET=
+JWT_EXPIRES_IN=15m
+JWT_REFRESH_EXPIRES_IN=7d
+CORS_ORIGIN=         # URL del backoffice desplegado (ej: https://kiosco-backoffice.vercel.app)
+SEED_ADMIN_NAME=
+SEED_ADMIN_EMAIL=
+SEED_ADMIN_PASSWORD=
+APP_ENV=prod
+PORT=3000
+```
+
+> `DATABASE_URL` debe ser la URL con **connection pooling** (puerto 6543 en Vercel Postgres).
+> `DIRECT_URL` debe ser la URL **directa** (puerto 5432) — requerida por `prisma migrate deploy`.
+
+### Configuración del proyecto `kiosco-backoffice`
+
+- **Root Directory:** `apps/backoffice`
+- **Framework Preset:** Angular
+- **Build Command:** `ng build --configuration production`
+- **Output Directory:** `dist/backoffice/browser`
+
+### Variables de entorno — `kiosco-backoffice`
+
+Ninguna en tiempo de build (las URLs de API están en `environment.ts`). Asegúrate de que `environment.prod.ts` apunte a la URL de producción de la API antes de hacer deploy.
+
+---
+
 ## Convención de commits
 
 Se sigue el estándar [Conventional Commits](https://www.conventionalcommits.org/).

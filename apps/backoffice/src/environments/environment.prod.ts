@@ -1,4 +1,4 @@
 export const environment = {
   production: true,
-  apiUrl: '/backoffice/v1',
+  apiUrl: 'https://kiosco-api.vercel.app/backoffice/v1',
 };
