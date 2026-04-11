@@ -141,5 +141,26 @@ model Kiosk {
   tenant   Tenant    @relation(fields: [tenantId], references: [id], onDelete: Cascade)
   campaign Campaign? @relation(fields: [campaignId], references: [id], onDelete: SetNull)
 
+  userSessions UserSession[]
+
   @@map("kiosks")
+}
+
+// ─────────────────────────────────────────────
+// USER SESSION
+// ─────────────────────────────────────────────
+model UserSession {
+  id           String    @id @default(cuid())
+  kioskId      String
+  name         String
+  age          String
+  neighborhood String
+  activities   Json      @default("{}")
+  startedAt    DateTime
+  endedAt      DateTime?
+  createdAt    DateTime  @default(now())
+
+  kiosk Kiosk @relation(fields: [kioskId], references: [id], onDelete: Cascade)
+
+  @@map("user_sessions")
 }

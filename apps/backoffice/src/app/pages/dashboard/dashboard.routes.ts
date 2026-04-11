@@ -41,4 +41,9 @@ export const dashboardRoutes: Routes = [
     loadComponent: () =>
       import('./kiosks/kiosk-list/kiosk-list.component').then((m) => m.KioskListComponent),
   },
+  {
+    path: 'tenants/:tenantId/kiosks/:kioskId/sessions',
+    loadComponent: () =>
+      import('./kiosks/kiosk-sessions/kiosk-sessions.component').then((m) => m.KioskSessionsComponent),
+  },
 ];

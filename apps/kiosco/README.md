@@ -111,6 +111,55 @@ npm run dev
 
 ---
 
+## Base de datos — Guía de referencia rápida
+
+El schema vive únicamente en `packages/database/prisma/schema.prisma`.
+
+### `db:migrate` — Crear y aplicar una migración (desarrollo)
+
+Úsalo cuando cambias el schema y necesitas que Prisma genere el archivo SQL versionado y lo aplique a la DB.
+
+```bash
+# Desde la raíz del monorepo, pasando el nombre directamente:
+npm run db:migrate -- -- --name add-user-session
+
+# O bien, desde el paquete de base de datos:
+cd packages/database && npx prisma migrate dev --name add-user-session
+```
+
+> El modo TUI de Turborepo captura el stdin e impide el input interactivo de Prisma, por eso el nombre debe pasarse con el flag `--name` en lugar de escribirlo cuando lo solicita.
+
+El archivo de migración queda en `packages/database/prisma/migrations/`. **No usar en producción** (usa `prisma migrate deploy` en CI/CD).
+
+### `db:generate` — Regenerar el cliente Prisma
+
+Úsalo cuando el schema cambia y solo necesitas actualizar los tipos TypeScript sin tocar la DB.
+
+```bash
+npm run db:generate
+```
+
+Se ejecuta automáticamente al final de `db:migrate`, pero también puede correrse de forma independiente.
+
+### `db:push` — Sincronizar schema sin migración (prototipado)
+
+Aplica el schema directamente a la DB **sin crear archivos de migración**. Útil para iterar rápido, pero los cambios no quedan versionados.
+
+```bash
+npm run db:push
+```
+
+### Flujo recomendado al cambiar el schema
+
+```
+1. Editar  packages/database/prisma/schema.prisma
+2. Ejecutar npm run db:migrate -- -- --name <nombre-descriptivo>
+3. El cliente Prisma se regenera automáticamente
+4. Reiniciar la API para que tome los cambios
+```
+
+---
+
 ## Convención de commits
 
 Se sigue el estándar [Conventional Commits](https://www.conventionalcommits.org/).

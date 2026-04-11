@@ -29,6 +29,7 @@
             <th class="px-4 py-3 text-xs font-semibold text-slate-500 uppercase tracking-wider">Campaña</th>
             <th class="px-4 py-3 text-xs font-semibold text-slate-500 uppercase tracking-wider">Último acceso</th>
             <th class="px-4 py-3 text-xs font-semibold text-slate-500 uppercase tracking-wider">Estado</th>
+            <th class="px-4 py-3 text-xs font-semibold text-slate-500 uppercase tracking-wider"></th>
           </tr>
         </thead>
         <tbody class="divide-y divide-slate-100">
@@ -36,7 +37,7 @@
           @if (isLoading()) {
             @for (i of [1,2,3]; track i) {
               <tr>
-                @for (j of [1,2,3,4,5,6]; track j) {
+                @for (j of [1,2,3,4,5,6,7]; track j) {
                   <td class="px-4 py-3">
                     <div class="h-4 bg-slate-100 rounded animate-pulse"></div>
                   </td>
@@ -45,7 +46,7 @@
             }
           } @else if (kiosks().length === 0) {
             <tr>
-              <td colspan="6" class="px-4 py-12 text-center text-slate-400 text-sm">
+              <td colspan="7" class="px-4 py-12 text-center text-slate-400 text-sm">
                 No hay kioscos registrados. Registra el primero.
               </td>
             </tr>
@@ -132,6 +133,16 @@
                       [class.translate-x-0]="!kiosk.isActive"
                     ></span>
                   </button>
+                </td>
+
+                <!-- Sesiones -->
+                <td class="px-4 py-3">
+                  <a
+                    [routerLink]="['/dashboard/tenants', tenantId, 'kiosks', kiosk.id, 'sessions']"
+                    class="text-xs text-blue-600 hover:text-blue-700 font-medium transition"
+                  >
+                    Ver sesiones
+                  </a>
                 </td>
 
               </tr>

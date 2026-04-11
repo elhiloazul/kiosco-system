@@ -15,7 +15,8 @@
       "@activity/*": ["src/activity/*"],
       "@slide/*": ["src/slide/*"],
       "@kiosk/*": ["src/kiosk/*"],
-      "@security/*": ["src/security/*"]
+      "@security/*": ["src/security/*"],
+      "@user-session/*": ["src/user-session/*"]
     }
   },
   "include": ["src/**/*"],

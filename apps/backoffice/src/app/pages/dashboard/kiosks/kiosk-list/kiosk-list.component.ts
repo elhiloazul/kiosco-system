@@ -1,6 +1,6 @@
 import { Component, inject, signal, OnInit } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, RouterLink } from '@angular/router';
 import { switchMap } from 'rxjs/operators';
 import { KioskService } from '../kiosk.service';
 import { CampaignService } from '../../campaigns/campaign.service';
@@ -10,7 +10,7 @@ import { Campaign } from '../../campaigns/campaign.model';
 @Component({
   selector: 'app-kiosk-list',
   standalone: true,
-  imports: [ReactiveFormsModule],
+  imports: [ReactiveFormsModule, RouterLink],
   templateUrl: './kiosk-list.component.html',
   host: { class: 'flex-1 flex flex-col overflow-hidden' },
 })
@@ -30,7 +30,7 @@ export class KioskListComponent implements OnInit {
   readonly copiedId = signal<string | null>(null);
   readonly errorMessage = signal<string | null>(null);
 
-  private tenantId = '';
+  protected tenantId = '';
 
   readonly form = this.fb.nonNullable.group({
     name: ['', [Validators.required, Validators.maxLength(150)]],
