@@ -1,3 +1,4 @@
+import '../src/register-paths';
 import { NestFactory } from '@nestjs/core';
 import { ExpressAdapter } from '@nestjs/platform-express';
 import express = require('express');
