@@ -1,10 +1,9 @@
-import '../src/register-paths';
 import { NestFactory } from '@nestjs/core';
 import { ExpressAdapter } from '@nestjs/platform-express';
 import express = require('express');
-import { AppModule } from '../src/app.module';
-import { GlobalExceptionFilter } from '../src/entrypoints/web/exception.filter';
-import { ResponseInterceptor } from '../src/entrypoints/web/response.interceptor';
+import { AppModule } from '../dist/app.module';
+import { GlobalExceptionFilter } from '../dist/entrypoints/web/exception.filter';
+import { ResponseInterceptor } from '../dist/entrypoints/web/response.interceptor';
 
 const expressServer = express();
 let isInitialized = false;

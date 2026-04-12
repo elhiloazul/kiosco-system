@@ -3,7 +3,7 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
-    "build": "nest build",
+    "build": "nest build && tsc-alias -p tsconfig.json",
     "dev": "nest start --watch",
     "start": "node dist/main",
     "seed:admin": "npx ts-node -r tsconfig-paths/register src/entrypoints/cli/seed-admin.ts",
@@ -21,6 +21,7 @@
     "bcrypt": "^6.0.0",
     "dotenv": "^17.3.1",
     "reflect-metadata": "^0.2.2",
+    "tsc-alias": "^1.8.10",
     "rxjs": "^7.8.1",
     "tsconfig-paths": "^4.2.0",
     "zod": "^3.24.1"
