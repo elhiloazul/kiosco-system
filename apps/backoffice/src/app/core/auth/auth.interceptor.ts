@@ -19,7 +19,9 @@ export const authInterceptor: HttpInterceptorFn = (
 
   return next(authReq).pipe(
     catchError((error: HttpErrorResponse) => {
-      if (error.status === 401 && authService.getRefreshToken()) {
+      const isRefreshRequest = req.url.includes('/auth/refresh');
+
+      if (error.status === 401 && !isRefreshRequest && authService.getRefreshToken()) {
         return authService.refreshTokens().pipe(
           switchMap((tokens) => next(addToken(req, tokens.accessToken))),
           catchError((refreshError) => {
@@ -28,6 +30,11 @@ export const authInterceptor: HttpInterceptorFn = (
           })
         );
       }
+
+      if (error.status === 401) {
+        authService.logout();
+      }
+
       return throwError(() => error);
     })
   );
