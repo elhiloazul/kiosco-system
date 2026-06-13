@@ -235,6 +235,7 @@
           <app-link-multi-media-input
             [value]="menuForm.controls.audio.value"
             mediaType="audio"
+            [tenantId]="tenantId"
             (valueChange)="menuForm.controls.audio.setValue($event)"
           />
         </div>

@@ -37,7 +37,7 @@ export class ActivityListComponent implements OnInit {
     name: ['', [Validators.required, Validators.maxLength(100)]],
   });
 
-  private tenantId = '';
+  tenantId = '';
   private campaignId = '';
 
   readonly form = this.fb.nonNullable.group({
