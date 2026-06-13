@@ -29,6 +29,7 @@
             [value]="backgroundImage()"
             mediaType="image"
             placeholder="URL de la imagen de fondo..."
+            [tenantId]="tenantId()"
             (valueChange)="backgroundImage.set($event); markChanged()"
           />
         </div>
@@ -39,6 +40,7 @@
             [value]="audio()"
             mediaType="audio"
             placeholder="URL del archivo de audio..."
+            [tenantId]="tenantId()"
             (valueChange)="audio.set($event); markChanged()"
           />
         </div>
@@ -57,6 +59,7 @@
                 [value]="imageUrl()"
                 mediaType="image"
                 placeholder="URL de la imagen..."
+                [tenantId]="tenantId()"
                 (valueChange)="imageUrl.set($event); markChanged()"
               />
             </div>
@@ -99,6 +102,7 @@
                 [value]="videoUrl()"
                 mediaType="video"
                 placeholder="URL del video..."
+                [tenantId]="tenantId()"
                 (valueChange)="videoUrl.set($event); markChanged()"
               />
             </div>
@@ -122,6 +126,7 @@
                 [value]="documentUrl()"
                 mediaType="document"
                 placeholder="URL del documento..."
+                [tenantId]="tenantId()"
                 (valueChange)="documentUrl.set($event); markChanged()"
               />
             </div>

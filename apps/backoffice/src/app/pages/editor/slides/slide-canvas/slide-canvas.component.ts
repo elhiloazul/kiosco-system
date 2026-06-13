@@ -14,6 +14,7 @@ export class SlideCanvasComponent {
   private readonly slideService = inject(SlideService);
 
   readonly slide = input.required<Slide>();
+  readonly tenantId = input('');
   readonly saved = output<Slide>();
 
   readonly SlideType = SlideType;

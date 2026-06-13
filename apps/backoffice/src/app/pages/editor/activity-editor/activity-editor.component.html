@@ -194,6 +194,7 @@
       @if (activeSlide()) {
         <app-slide-canvas
           [slide]="activeSlide()!"
+          [tenantId]="tenantId"
           (saved)="onSlideSaved($event)"
         />
       } @else {

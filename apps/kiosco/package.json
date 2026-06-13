@@ -18,11 +18,12 @@
     "@nestjs/jwt": "^11.0.2",
     "@nestjs/platform-express": "^10.4.15",
     "@paralleldrive/cuid2": "^2.2.2",
+    "@vercel/blob": "^2.4.0",
     "bcrypt": "^6.0.0",
     "dotenv": "^17.3.1",
     "reflect-metadata": "^0.2.2",
-    "tsc-alias": "^1.8.10",
     "rxjs": "^7.8.1",
+    "tsc-alias": "^1.8.10",
     "tsconfig-paths": "^4.2.0",
     "zod": "^3.24.1"
   },

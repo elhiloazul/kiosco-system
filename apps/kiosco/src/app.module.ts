@@ -9,12 +9,14 @@ import { KioskModule } from './kiosk/infrastructure/kiosk.module';
 import { UserSessionModule } from './user-session/infrastructure/user-session.module';
 import { UserSessionKioskModule } from './user-session/infrastructure/user-session-kiosk.module';
 import { AuthModule } from './security/auth/infrastructure/auth.module';
+import { MediaModule } from './media/infrastructure/media.module';
 import { JwtAuthGuard } from './security/guards/jwt-auth.guard';
 import { KioskApiKeyGuard } from './security/guards/kiosk-api-key.guard';
 
 @Module({
   imports: [
     AuthModule,
+    MediaModule,
     TenantModule,
     CampaignModule,
     ActivityModule,
@@ -31,6 +33,7 @@ import { KioskApiKeyGuard } from './security/guards/kiosk-api-key.guard';
       { path: 'backoffice/v1', module: SlideModule },
       { path: 'backoffice/v1', module: KioskModule },
       { path: 'backoffice/v1', module: UserSessionModule },
+      { path: 'backoffice/v1', module: MediaModule },
       { path: 'kiosk/v1', module: ActivityKioskModule },
       { path: 'kiosk/v1', module: UserSessionKioskModule },
     ]),

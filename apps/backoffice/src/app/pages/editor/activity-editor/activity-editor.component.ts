@@ -47,7 +47,7 @@ export class ActivityEditorComponent implements OnInit {
   readonly SLIDE_TYPE_LABELS = SLIDE_TYPE_LABELS;
   readonly slideTypes = Object.values(SlideType);
 
-  private tenantId = '';
+  tenantId = '';
   private campaignId = '';
   private activityId = '';
 

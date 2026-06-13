@@ -2,7 +2,7 @@ import * as path from 'path';
 import * as dotenv from 'dotenv';
 dotenv.config({ path: path.resolve(__dirname, '../.env') });
 
-import { NestFactory } from '@nestjs/core';
+import { NestFactory, Reflector } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { GlobalExceptionFilter } from './entrypoints/web/exception.filter';
 import { ResponseInterceptor } from './entrypoints/web/response.interceptor';
@@ -20,7 +20,7 @@ async function bootstrap() {
   });
 
   app.useGlobalFilters(new GlobalExceptionFilter());
-  app.useGlobalInterceptors(new ResponseInterceptor());
+  app.useGlobalInterceptors(new ResponseInterceptor(app.get(Reflector)));
 
   const port = process.env.PORT ?? 3000;
   await app.listen(port);

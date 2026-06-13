@@ -19,8 +19,9 @@ model Tenant {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  campaigns Campaign[]
-  kiosks    Kiosk[]
+  campaigns   Campaign[]
+  kiosks      Kiosk[]
+  mediaAssets MediaAsset[]
 
   @@map("tenants")
 }
@@ -127,6 +128,23 @@ enum SlideType {
   text
   image
   custom
+}
+
+// ─────────────────────────────────────────────
+// MEDIA ASSET
+// ─────────────────────────────────────────────
+model MediaAsset {
+  id        String   @id @default(cuid())
+  tenantId  String
+  name      String
+  url       String
+  mimeType  String
+  size      Int
+  createdAt DateTime @default(now())
+
+  tenant Tenant @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+
+  @@map("media_assets")
 }
 
 // ─────────────────────────────────────────────

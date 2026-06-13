@@ -1,5 +1,6 @@
 import { Component, computed, effect, inject, input, output, signal } from '@angular/core';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
+import { FileManagerModalComponent } from '../../../../shared/components/file-manager-modal/file-manager-modal.component';
 
 export type MediaType = 'video' | 'image' | 'document' | 'audio';
 type ValidationState = 'idle' | 'validating' | 'valid' | 'invalid';
@@ -14,16 +15,19 @@ const ICON_PATHS: Record<MediaType, string> = {
 @Component({
   selector: 'app-link-multi-media-input',
   standalone: true,
+  imports: [FileManagerModalComponent],
   templateUrl: './link-multi-media-input.component.html',
 })
 export class LinkMultiMediaInputComponent {
   readonly value = input('');
   readonly mediaType = input<MediaType>('image');
   readonly placeholder = input('Pega la URL del recurso...');
+  readonly tenantId = input('');
   readonly valueChange = output<string>();
 
   readonly inputValue = signal('');
   readonly validationState = signal<ValidationState>('idle');
+  readonly showFileManager = signal(false);
 
   readonly iconPath = computed(() => ICON_PATHS[this.mediaType()]);
 
@@ -72,6 +76,17 @@ export class LinkMultiMediaInputComponent {
     this.inputValue.set(val);
     this.valueChange.emit(val);
     this.validationState.set('idle');
+  }
+
+  openFileManager(): void {
+    this.showFileManager.set(true);
+  }
+
+  onFileManagerUrlSelected(url: string): void {
+    this.inputValue.set(url);
+    this.valueChange.emit(url);
+    this.validationState.set('valid');
+    this.showFileManager.set(false);
   }
 
   validate(): void {
