@@ -1,4 +1,4 @@
-import { NestFactory } from '@nestjs/core';
+import { NestFactory, Reflector } from '@nestjs/core';
 import { ExpressAdapter } from '@nestjs/platform-express';
 import express = require('express');
 import { AppModule } from '../dist/app.module';
@@ -29,7 +29,7 @@ async function bootstrap() {
     });
 
     app.useGlobalFilters(new GlobalExceptionFilter());
-    app.useGlobalInterceptors(new ResponseInterceptor());
+    app.useGlobalInterceptors(new ResponseInterceptor(app.get(Reflector)));
 
     await app.init();
     isInitialized = true;
