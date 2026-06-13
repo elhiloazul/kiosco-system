@@ -31,9 +31,17 @@ async function main() {
     const existing = await prisma.admin.findUnique({
       where: { email: config.email },
     });
-
+        
     if (existing) {
-      console.log(`✓ Admin already exists (${config.email}), skipping seed.`);
+      if (!existing.isPrincipal) {
+        await prisma.admin.update({
+          where: { id: existing.id },
+          data: { isPrincipal: true },
+        });
+        console.log(`✓ Admin updated to principal (${config.email}).`);
+      } else {
+        console.log(`✓ Admin already exists (${config.email}), skipping seed.`);
+      }
       return;
     }
 
@@ -45,6 +53,8 @@ async function main() {
         name: config.name,
         email: config.email,
         passwordHash,
+        isPrincipal: true,
+        status: 'ENABLED',
       },
     });
 

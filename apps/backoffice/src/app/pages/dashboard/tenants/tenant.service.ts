@@ -1,7 +1,6 @@
 import { Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable, of, tap } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { Observable, tap } from 'rxjs';
 import { environment } from '../../../../environments/environment';
 import { Tenant, CreateTenantRequest } from './tenant.model';
 
@@ -17,12 +16,9 @@ export class TenantService {
     );
   }
 
-  findById(id: string): Observable<Tenant | null> {
-    if (this.cache.has(id)) {
-      return of(this.cache.get(id)!);
-    }
-    return this.getAll().pipe(
-      map((tenants) => tenants.find((t) => t.id === id) ?? null)
+  findById(id: string): Observable<Tenant> {
+    return this.http.get<Tenant>(`${this.base}/${id}`).pipe(
+      tap((tenant) => this.cache.set(tenant.id, tenant))
     );
   }
 

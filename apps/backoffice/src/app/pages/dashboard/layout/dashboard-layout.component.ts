@@ -26,9 +26,7 @@ export class DashboardLayoutComponent implements OnInit {
   );
 
   ngOnInit(): void {
-    if (!this.authService.profile()) {
-      this.authService.loadProfile().subscribe();
-    }
+    this.authService.loadProfile().subscribe();
 
     this.tenantService.getAll().subscribe((tenants) => this.tenants.set(tenants));
 
@@ -62,6 +60,10 @@ export class DashboardLayoutComponent implements OnInit {
     this.tenantService
       .findById(tenantId)
       .subscribe((tenant) => this.activeTenant.set(tenant));
+  }
+
+  logout(): void {
+    this.authService.logout();
   }
 
   private extractTenantId(): string | null {

@@ -1,4 +1,4 @@
-import { Controller, Post, Get, Patch, Body } from '@nestjs/common';
+import { Controller, Post, Get, Patch, Body, Param } from '@nestjs/common';
 import { Public } from '@security/guards/public.decorator';
 import { CurrentAdmin, JwtPayload } from '@security/guards/current-admin.decorator';
 import { LoginService } from '@security/auth/application/login.service';
@@ -6,11 +6,16 @@ import { RefreshTokenService } from '@security/auth/application/refresh-token.se
 import { LogoutService } from '@security/auth/application/logout.service';
 import { GetMeService } from '@security/auth/application/get-me.service';
 import { UpdateProfileService } from '@security/auth/application/update-profile.service';
+import { CreateAdminService } from '@security/auth/application/create-admin.service';
+import { GetAllAdminsService } from '@security/auth/application/get-all-admins.service';
+import { UpdateAdminService } from '@security/auth/application/update-admin.service';
 import {
   LoginInputDto,
   RefreshTokenInputDto,
   LogoutInputDto,
   UpdateProfileInputDto,
+  CreateAdminInputDto,
+  UpdateAdminInputDto,
 } from '@security/auth/application/auth.dto';
 
 @Controller('auth')
@@ -21,6 +26,9 @@ export class AuthController {
     private readonly logoutService: LogoutService,
     private readonly getMeService: GetMeService,
     private readonly updateProfileService: UpdateProfileService,
+    private readonly createAdminService: CreateAdminService,
+    private readonly getAllAdminsService: GetAllAdminsService,
+    private readonly updateAdminService: UpdateAdminService,
   ) {}
 
   @Public()
@@ -52,5 +60,22 @@ export class AuthController {
   updateProfile(@CurrentAdmin() admin: JwtPayload, @Body() body: unknown) {
     const input = UpdateProfileInputDto.parse(body);
     return this.updateProfileService.execute(admin.sub, input);
+  }
+
+  @Post('users')
+  createUser(@Body() body: unknown) {
+    const input = CreateAdminInputDto.parse(body);
+    return this.createAdminService.execute(input);
+  }
+
+  @Get('users')
+  listUsers() {
+    return this.getAllAdminsService.execute();
+  }
+
+  @Patch('users/:id')
+  updateUser(@CurrentAdmin() caller: JwtPayload, @Param('id') id: string, @Body() body: unknown) {
+    const input = UpdateAdminInputDto.parse({ ...body as object, id });
+    return this.updateAdminService.execute(caller.sub, input);
   }
 }

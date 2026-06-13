@@ -1,4 +1,4 @@
-<!-- Header -->
+<!-- ── Header ── -->
 <div class="h-16 bg-white border-b border-slate-200 shadow-sm flex items-center px-8 shrink-0">
   @if (tenant()) {
     <div>
@@ -8,11 +8,12 @@
   }
 </div>
 
-<!-- Content -->
+<!-- ── Content ── -->
 <div class="flex-1 overflow-y-auto p-8">
   @if (tenant()) {
-    <!-- Info card -->
     <div class="bg-white border border-slate-200 rounded-xl shadow-sm p-6 max-w-2xl">
+
+      <!-- Info del tenant -->
       <div class="flex items-center gap-4 mb-6">
         @if (tenant()!.logoUrl) {
           <img
@@ -29,9 +30,7 @@
           <h2 class="text-lg font-bold text-slate-900">{{ tenant()!.name }}</h2>
           <span
             class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-medium mt-1"
-            [class]="tenant()!.isActive
-              ? 'bg-emerald-50 text-emerald-700'
-              : 'bg-slate-100 text-slate-500'"
+            [class]="tenant()!.isActive ? 'bg-emerald-50 text-emerald-700' : 'bg-slate-100 text-slate-500'"
           >
             <span
               class="w-1.5 h-1.5 rounded-full"
@@ -44,6 +43,7 @@
 
       <!-- Accesos rápidos -->
       <div class="grid grid-cols-2 gap-3">
+
         <a
           [routerLink]="['/dashboard/tenants', tenantId(), 'campaigns']"
           class="flex items-center gap-3 p-4 border border-slate-200 rounded-lg hover:border-blue-300 hover:bg-blue-50/30 transition group"
@@ -73,6 +73,7 @@
             <p class="text-xs text-slate-400">Gestionar dispositivos</p>
           </div>
         </a>
+
       </div>
     </div>
   }

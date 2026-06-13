@@ -27,6 +27,10 @@ export class LoginService {
       throw new UnauthorizedException('Unauthorized access');
     }
 
+    if (admin.status === 'DISABLED') {
+      throw new UnauthorizedException('Unauthorized access');
+    }
+
     const accessToken = this.jwtService.sign({ sub: admin.id, email: admin.email.toString() });
 
     await this.refreshTokenRepository.deleteExpiredByAdminId(admin.id);

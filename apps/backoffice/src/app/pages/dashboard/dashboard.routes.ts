@@ -37,6 +37,11 @@ export const dashboardRoutes: Routes = [
       import('./profile/profile.component').then((m) => m.ProfileComponent),
   },
   {
+    path: 'tenants/:tenantId/users',
+    loadComponent: () =>
+      import('./users/user-list/user-list.component').then((m) => m.UserListComponent),
+  },
+  {
     path: 'tenants/:tenantId/kiosks',
     loadComponent: () =>
       import('./kiosks/kiosk-list/kiosk-list.component').then((m) => m.KioskListComponent),

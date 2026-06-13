@@ -7,6 +7,8 @@ const AdminSchema = z.object({
   id: z.string().min(1),
   name: z.string().min(1).max(100),
   passwordHash: z.string().min(1),
+  status: z.enum(['ENABLED', 'DISABLED']),
+  isPrincipal: z.boolean(),
   createdAt: z.date(),
   updatedAt: z.date(),
 });
@@ -23,11 +25,14 @@ export class Admin {
     name: string;
     email: string;
     passwordHash: string;
+    isPrincipal?: boolean;
   }): Admin {
     const props = AdminSchema.parse({
       id: input.id,
       name: input.name,
       passwordHash: input.passwordHash,
+      status: 'ENABLED',
+      isPrincipal: input.isPrincipal ?? false,
       createdAt: new Date(),
       updatedAt: new Date(),
     });
@@ -49,10 +54,17 @@ export class Admin {
     this.props = { ...updated, email: this.props.email };
   }
 
+  updateStatus(status: 'ENABLED' | 'DISABLED'): void {
+    const updated = AdminSchema.parse({ ...this.props, status, updatedAt: new Date() });
+    this.props = { ...updated, email: this.props.email };
+  }
+
   get id() { return this.props.id; }
   get name() { return this.props.name; }
   get email() { return this.props.email; }
   get passwordHash() { return this.props.passwordHash; }
+  get status() { return this.props.status; }
+  get isPrincipal() { return this.props.isPrincipal; }
   get createdAt() { return this.props.createdAt; }
   get updatedAt() { return this.props.updatedAt; }
 }

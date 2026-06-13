@@ -15,12 +15,15 @@ export class AdminPrismaRepository implements IAdminRepository {
         name: admin.name,
         email: admin.email.toString(),
         passwordHash: admin.passwordHash,
+        status: admin.status,
+        isPrincipal: admin.isPrincipal,
         createdAt: admin.createdAt,
         updatedAt: admin.updatedAt,
       },
       update: {
         name: admin.name,
         passwordHash: admin.passwordHash,
+        status: admin.status,
         updatedAt: admin.updatedAt,
       },
     });
@@ -36,5 +39,10 @@ export class AdminPrismaRepository implements IAdminRepository {
     const row = await this.prisma.admin.findUnique({ where: { id } });
     if (!row) return null;
     return Admin.reconstitute(row);
+  }
+
+  async findAll(): Promise<Admin[]> {
+    const rows = await this.prisma.admin.findMany({ orderBy: { createdAt: 'asc' } });
+    return rows.map((row) => Admin.reconstitute(row));
   }
 }

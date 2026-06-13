@@ -31,6 +31,8 @@ export class UpdateProfileService {
       id: admin.id,
       name: admin.name,
       email: admin.email.toString(),
+      status: admin.status,
+      isPrincipal: admin.isPrincipal,
       createdAt: admin.createdAt,
       updatedAt: admin.updatedAt,
     };

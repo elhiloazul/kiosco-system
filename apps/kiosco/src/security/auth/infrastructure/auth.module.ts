@@ -9,6 +9,9 @@ import { RefreshTokenService } from '../application/refresh-token.service';
 import { LogoutService } from '../application/logout.service';
 import { GetMeService } from '../application/get-me.service';
 import { UpdateProfileService } from '../application/update-profile.service';
+import { CreateAdminService } from '../application/create-admin.service';
+import { GetAllAdminsService } from '../application/get-all-admins.service';
+import { UpdateAdminService } from '../application/update-admin.service';
 import { PrismaService } from '../../../shared/infrastructure/prisma.service';
 import { AuthController } from '../../../entrypoints/web/auth/backoffice/auth.controller';
 import type { StringValue } from 'ms';
@@ -30,6 +33,9 @@ import type { StringValue } from 'ms';
     LogoutService,
     GetMeService,
     UpdateProfileService,
+    CreateAdminService,
+    GetAllAdminsService,
+    UpdateAdminService,
   ],
   exports: [JwtModule],
 })

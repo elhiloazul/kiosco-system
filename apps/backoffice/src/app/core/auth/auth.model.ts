@@ -29,6 +29,8 @@ export interface AdminProfile {
   id: string;
   name: string;
   email: string;
+  status: 'ENABLED' | 'DISABLED';
+  isPrincipal: boolean;
   createdAt: string;
   updatedAt: string;
 }

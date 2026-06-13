@@ -1,13 +1,15 @@
-import { Controller, Get, Post, Body } from '@nestjs/common';
+import { Controller, Get, Post, Body, Param } from '@nestjs/common';
 import { CreateTenantInputDto } from '@tenant/application/tenant.dto';
 import { CreateTenantService } from '@tenant/application/create-tenant.service';
 import { GetAllTenantsService } from '@tenant/application/get-all-tenants.service';
+import { GetTenantByIdService } from '@tenant/application/get-tenant-by-id.service';
 
 @Controller('tenants')
 export class TenantController {
   constructor(
     private readonly createTenant: CreateTenantService,
     private readonly getAllTenants: GetAllTenantsService,
+    private readonly getTenantById: GetTenantByIdService,
   ) {}
 
   @Post()
@@ -19,5 +21,10 @@ export class TenantController {
   @Get()
   findAll() {
     return this.getAllTenants.execute();
+  }
+
+  @Get(':id')
+  findOne(@Param('id') id: string) {
+    return this.getTenantById.execute(id);
   }
 }

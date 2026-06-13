@@ -9,6 +9,7 @@ import { Tenant } from '../tenant.model';
   standalone: true,
   imports: [RouterLink],
   templateUrl: './tenant-dashboard.component.html',
+  host: { class: 'flex-1 flex flex-col overflow-hidden' },
 })
 export class TenantDashboardComponent implements OnInit {
   private readonly route = inject(ActivatedRoute);

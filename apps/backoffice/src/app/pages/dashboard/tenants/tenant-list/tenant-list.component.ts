@@ -1,13 +1,14 @@
 import { Component, inject, signal, OnInit } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { DatePipe } from '@angular/common';
+import { RouterLink } from '@angular/router';
 import { TenantService } from '../tenant.service';
 import { Tenant } from '../tenant.model';
 
 @Component({
   selector: 'app-tenant-list',
   standalone: true,
-  imports: [ReactiveFormsModule, DatePipe],
+  imports: [ReactiveFormsModule, DatePipe, RouterLink],
   templateUrl: './tenant-list.component.html',
 })
 export class TenantListComponent implements OnInit {

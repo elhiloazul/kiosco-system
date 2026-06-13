@@ -29,16 +29,23 @@ model Tenant {
 // ADMIN (Super Admin)
 // ─────────────────────────────────────────────
 model Admin {
-  id           String   @id @default(cuid())
+  id           String      @id @default(cuid())
   name         String
-  email        String   @unique
+  email        String      @unique
   passwordHash String
-  createdAt    DateTime @default(now())
-  updatedAt    DateTime @updatedAt
+  status       AdminStatus @default(ENABLED)
+  isPrincipal  Boolean     @default(false)
+  createdAt    DateTime    @default(now())
+  updatedAt    DateTime    @updatedAt
 
   refreshTokens RefreshToken[]
 
   @@map("admins")
+}
+
+enum AdminStatus {
+  ENABLED
+  DISABLED
 }
 
 model RefreshToken {
