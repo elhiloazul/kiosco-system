@@ -41,7 +41,7 @@ export class StorageService {
     file: File,
     onProgress?: (pct: number) => void,
   ): Observable<UploadResult> {
-    const promise = upload(file.name, file, {
+    const promise = upload(`tenants/${tenantId}/${file.name}`, file, {
       access: 'public',
       handleUploadUrl: `${environment.apiUrl}/tenants/${tenantId}/assets/upload-token`,
       headers: { Authorization: `Bearer ${this.authService.accessToken()}` },

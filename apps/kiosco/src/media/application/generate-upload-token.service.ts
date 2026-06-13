@@ -18,8 +18,10 @@ export class GenerateUploadTokenService {
       throw new BadRequestException('Invalid request type');
     }
 
-    const filename = body.payload.pathname.split('/').pop() ?? body.payload.pathname;
-    const pathname = `tenants/${tenantId}/${filename}`;
+    const pathname = body.payload.pathname;
+    if (!pathname.startsWith(`tenants/${tenantId}/`)) {
+      throw new BadRequestException('Invalid pathname');
+    }
 
     const clientToken = await generateClientTokenFromReadWriteToken({
       pathname,
