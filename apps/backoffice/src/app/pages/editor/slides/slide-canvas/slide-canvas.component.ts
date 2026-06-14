@@ -1,13 +1,15 @@
-import { Component, effect, inject, input, output, signal } from '@angular/core';
+import { Component, computed, effect, inject, input, output, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { SlideService } from '../slide.service';
 import { Slide, SlideType, SLIDE_TYPE_LABELS } from '../slide.model';
 import { LinkMultiMediaInputComponent } from '../link-multi-media-input/link-multi-media-input.component';
+import { COMPONENT_REGISTRY } from '../custom-components/custom-component.registry';
+import { CustomMetadataFormComponent } from '../custom-components/custom-metadata-form/custom-metadata-form.component';
 
 @Component({
   selector: 'app-slide-canvas',
   standalone: true,
-  imports: [FormsModule, LinkMultiMediaInputComponent],
+  imports: [FormsModule, LinkMultiMediaInputComponent, CustomMetadataFormComponent],
   templateUrl: './slide-canvas.component.html',
 })
 export class SlideCanvasComponent {
@@ -32,6 +34,12 @@ export class SlideCanvasComponent {
   readonly isButtonPause = signal(false);
   readonly text = signal('');            // tipo TEXT
   readonly component = signal('');       // tipo CUSTOM
+  readonly customMetadata = signal<Record<string, unknown>>({});
+
+  readonly customFormConfig = computed(() => {
+    const name = this.component();
+    return COMPONENT_REGISTRY[name] ?? null;
+  });
 
   readonly hasChanges = signal(false);
   readonly isSaving = signal(false);
@@ -64,6 +72,7 @@ export class SlideCanvasComponent {
         break;
       case SlideType.CUSTOM:
         this.component.set((c['component'] as string) ?? '');
+        this.customMetadata.set((c['metadata'] as Record<string, unknown>) ?? {});
         break;
     }
 
@@ -95,7 +104,7 @@ export class SlideCanvasComponent {
       case SlideType.TEXT:
         return { ...base, text: this.text() };
       case SlideType.CUSTOM:
-        return { ...base, component: this.component() };
+        return { ...base, component: this.component(), metadata: this.customMetadata() };
       default:
         return base;
     }

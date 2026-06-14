@@ -1,0 +1,100 @@
+<div class="flex flex-col gap-6">
+
+  <!-- Scalar fields -->
+  @for (field of scalarFields(); track field.key) {
+    <div class="flex flex-col gap-1.5">
+      <label class="text-sm font-semibold text-slate-700">{{ field.config.label }}</label>
+      @if (field.config.widget === 'media-input') {
+        <app-link-multi-media-input
+          [value]="getScalarValue(field.key)"
+          [mediaType]="$any(field.config).mediaType"
+          [tenantId]="tenantId()"
+          (valueChange)="updateScalar(field.key, $event)"
+        />
+      } @else if (field.config.widget === 'textarea') {
+        <textarea
+          [value]="getScalarValue(field.key)"
+          (input)="updateScalar(field.key, $any($event.target).value)"
+          rows="3"
+          [placeholder]="$any(field.config).placeholder ?? ''"
+          class="px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm text-slate-700 placeholder:text-slate-400 outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition resize-none"
+        ></textarea>
+      } @else {
+        <input
+          type="text"
+          [value]="getScalarValue(field.key)"
+          (input)="updateScalar(field.key, $any($event.target).value)"
+          [placeholder]="$any(field.config).placeholder ?? ''"
+          class="px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm text-slate-700 placeholder:text-slate-400 outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition"
+        />
+      }
+    </div>
+  }
+
+  <!-- Array fields -->
+  @for (field of arrayFields(); track field.key) {
+    <div class="flex flex-col gap-3">
+      <h4 class="text-sm font-semibold text-slate-700">{{ field.config.label }}</h4>
+
+      @for (item of getArrayItems(field.key); track $index; let eventIdx = $index) {
+        <div class="border border-slate-200 rounded-xl p-4 flex flex-col gap-3 relative">
+          <!-- Remove button -->
+          <button
+            type="button"
+            (click)="removeArrayItem(field.key, eventIdx)"
+            class="absolute top-3 right-3 w-6 h-6 flex items-center justify-center rounded-md text-slate-400 hover:text-red-500 hover:bg-red-50 transition"
+          >
+            <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+            </svg>
+          </button>
+
+          <span class="text-xs font-medium text-slate-400 uppercase tracking-wider">Evento {{ eventIdx + 1 }}</span>
+
+          @for (itemField of objectEntries(field.config.item); track itemField[0]) {
+            <div class="flex flex-col gap-1.5">
+              <label class="text-sm font-medium text-slate-600">{{ itemField[1].label }}</label>
+              @if (itemField[1].widget === 'media-input') {
+                <app-link-multi-media-input
+                  [value]="item[itemField[0]] ?? ''"
+                  [mediaType]="$any(itemField[1]).mediaType"
+                  [tenantId]="tenantId()"
+                  (valueChange)="updateArrayItemField(field.key, eventIdx, itemField[0], $event)"
+                />
+              } @else if (itemField[1].widget === 'textarea') {
+                <textarea
+                  [value]="item[itemField[0]] ?? ''"
+                  (input)="updateArrayItemField(field.key, eventIdx, itemField[0], $any($event.target).value)"
+                  rows="2"
+                  [placeholder]="$any(itemField[1]).placeholder ?? ''"
+                  class="px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm text-slate-700 placeholder:text-slate-400 outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition resize-none"
+                ></textarea>
+              } @else {
+                <input
+                  type="text"
+                  [value]="item[itemField[0]] ?? ''"
+                  (input)="updateArrayItemField(field.key, eventIdx, itemField[0], $any($event.target).value)"
+                  [placeholder]="$any(itemField[1]).placeholder ?? ''"
+                  class="px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm text-slate-700 placeholder:text-slate-400 outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition"
+                />
+              }
+            </div>
+          }
+        </div>
+      }
+
+      <!-- Add item button -->
+      <button
+        type="button"
+        (click)="addArrayItem(field.key, field.config.item)"
+        class="w-full py-2.5 border border-dashed border-slate-300 rounded-xl text-sm text-slate-500 hover:border-blue-400 hover:text-blue-600 hover:bg-blue-50/50 transition flex items-center justify-center gap-2"
+      >
+        <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
+        </svg>
+        {{ field.config.addLabel }}
+      </button>
+    </div>
+  }
+
+</div>
